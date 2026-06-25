@@ -24,9 +24,6 @@
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IEC61850forCSharp\IEC61850.NET.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="client1.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
