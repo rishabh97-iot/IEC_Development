@@ -1,0 +1,353 @@
+﻿<UserControl x:Class="IECGUI.View.Dashbaord1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IECGUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="930" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#1F2554">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="720"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                Background="#2A346A">
+
+            <DockPanel>
+
+                <TextBlock Text="Grid SubStation-031"
+                           Foreground="White"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Margin="20,0"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+                    <Button Content="Home" Width="100" Command="{Binding HomeCommand}"/>
+                    <Button Content="Alarm" Width="100" Command="{Binding AlarmCommand}"/>
+                    <Button Content="Events" Width="100"  Command="{Binding EventsCommand}"/>
+                    <Button Content="Trending" Width="100" Command="{Binding TrendingCommand}"/>
+                    <Button Content="Reports" Width="100" Command="{Binding ReportsCommand}"/>
+                </StackPanel>
+
+            </DockPanel>
+
+        </Border>
+
+        <!-- Generator Summary -->
+        <UniformGrid Grid.Row="1"
+                     Columns="5"                    
+                     Margin="10">
+
+            <GroupBox Header="G1" >
+                <StackPanel >
+                    <TextBlock Text="Load : 3.9 MW" Style="{StaticResource ColumnHeaderStyle}" />
+                    <TextBlock Text="Frequency : 49.5 Hz" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Voltage : 10.5 MV" Style="{StaticResource ColumnHeaderStyle}" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="G2" >
+                <StackPanel>
+                    <TextBlock Text="Load : 3.9 MW" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Frequency : 49.5 Hz" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Voltage : 10.5 MV" Style="{StaticResource ColumnHeaderStyle}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="G3">
+                <StackPanel>
+                    <TextBlock Text="Load : 3.9 MW" Foreground="White" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Frequency : 49.5 Hz" Foreground="White" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Voltage : 10.5 MV" Foreground="White" Style="{StaticResource ColumnHeaderStyle}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="G4" >
+                <StackPanel>
+                    <TextBlock Text="Load : 3.9 MW" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Frequency : 49.5 Hz" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Voltage : 10.5 MV" Style="{StaticResource ColumnHeaderStyle}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="G5" >
+                <StackPanel>
+                    <TextBlock Text="Load : 3.9 MW" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Frequency : 49.5 Hz" Style="{StaticResource ColumnHeaderStyle}"/>
+                    <TextBlock Text="Voltage : 10.5 MV" Style="{StaticResource ColumnHeaderStyle}"/>
+                </StackPanel>
+            </GroupBox>
+        </UniformGrid>
+
+        <!-- Mimic Area -->
+        <Border Grid.Row="2"
+                Margin="10"
+                BorderBrush="Gray"
+                BorderThickness="1">
+
+            <Canvas Background="#1F2554">
+
+                <!-- Main Bus -->
+                <Line X1="50"
+                      Y1="300"
+                      X2="850"
+                      Y2="300"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                <!-- Main Bus -->
+                <Line X1="950"
+                      Y1="300"
+                      X2="1600"
+                      Y2="300"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                
+                <!-- Bus Coupler-->
+                <Line X1="850"
+                      Y1="300"
+                      X2="950"
+                      Y2="280"
+                      Stroke="red"
+                      StrokeThickness="3"/>
+
+                <!-- Feeder1 -->
+                <Line X1="200"
+                      Y1="100"
+                      X2="200"
+                      Y2="300"
+                      Stroke="Red"
+                      StrokeThickness="3"/>
+                <!-- Feeder2 -->
+                <Line X1="400"
+                     Y1="100"
+                     X2="400"
+                     Y2="300"
+                     Stroke="Red"
+                     StrokeThickness="3"/>
+                <!-- Incommer 1 -->
+                <Line X1="150"
+                      Y1="300"
+                      X2="150"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                
+                <!-- Incommer 2 -->
+                <Line X1="300"
+                      Y1="300"
+                      X2="300"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 3 -->
+                <Line X1="450"
+                      Y1="300"
+                      X2="450"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                <!-- Incommer 4 -->
+                <Line X1="600"
+                      Y1="300"
+                      X2="600"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 5 -->
+                <Line X1="750"
+                      Y1="300"
+                      X2="750"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 6 -->
+                <Line X1="1050"
+                      Y1="300"
+                      X2="1050"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 7 -->
+                <Line X1="1200"
+                      Y1="300"
+                      X2="1200"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 8 -->
+                <Line X1="1350"
+                      Y1="300"
+                      X2="1350"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+
+                <!-- Incommer 9 -->
+                <Line X1="1500"
+                      Y1="300"
+                      X2="1500"
+                      Y2="400"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+             
+
+                <!-- Incommer Breaker 1 -->
+                    <Button Command="{Binding INCBRK1OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="120" Canvas.Top="400" />
+                    <Line X1="130" Y1="400" X2="150" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen1}"/>                 
+
+                    <!-- Incommer Breaker 2 -->
+                 <Button Command="{Binding INCBRK2OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="270" Canvas.Top="400" />
+                    <Line X1="280" Y1="400" X2="300" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen2}"/>
+                <!-- Incommer Breaker 3 -->
+                    <Button Command="{Binding INCBRK3OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="420" Canvas.Top="400" />
+                    <Line X1="430" Y1="400" X2="450" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen3}"/>
+                <!-- Incommer Breaker 4 -->
+                    <Button Command="{Binding INCBRK4OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="570" Canvas.Top="400" />
+                    <Line X1="580" Y1="400" X2="600" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen4}"/>
+                <!-- Incommer Breaker 5 -->
+                    <Button Command="{Binding INCBRK5OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="720" Canvas.Top="400" />
+                    <Line X1="730" Y1="400" X2="750" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen5}"/>
+                <!-- Incommer Breaker 6 -->
+                    <Button Command="{Binding INCBRK6OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1020" Canvas.Top="400" />
+                    <Line X1="1030" Y1="400" X2="1050" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen6}"/>
+                <!-- Incommer Breaker 7 -->
+                    <Button Command="{Binding INCBRK7OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1170" Canvas.Top="400" />
+                    <Line X1="1180" Y1="400" X2="1200" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen7}"/>
+                <!-- Incommer Breaker 8 -->
+                    <Button Command="{Binding INCBRK8OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1320" Canvas.Top="400" />
+                    <Line X1="1330" Y1="400" X2="1350" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen8}"/>
+                <!-- Incommer Breaker 9 -->
+                    <Button Command="{Binding INCBRK9OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1470" Canvas.Top="400" />
+                    <Line X1="1480" Y1="400" X2="1500" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen9}"/>
+
+             
+
+                <!-- Incommer 1 drop -->
+                <Line X1="150"
+                      Y1="450"
+                      X2="150"
+                      Y2="550"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                <!-- Incommer 2 drop -->
+                <Line X1="300"
+                      Y1="450"
+                      X2="300"
+                      Y2="550"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                <!-- Incommer 3 drop -->
+                <Line X1="450"
+                      Y1="450"
+                      X2="450"
+                      Y2="550"
+                      Stroke="Red"
+                      StrokeThickness="5"/>
+                <!-- Incommer 4 drop -->
+                <Line X1="600"
+                     Y1="450"
+                     X2="600"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>
+                <!-- Incommer 5 drop -->
+                <Line X1="750"
+                     Y1="450"
+                     X2="750"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>                
+                <!-- Incommer 6 drop -->
+                <Line X1="1050"
+                     Y1="450"
+                     X2="1050"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>
+                <!-- Incommer 7 drop -->
+                <Line X1="1200"
+                     Y1="450"
+                     X2="1200"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>
+                <!-- Incommer 8 drop -->
+                <Line X1="1350"
+                     Y1="450"
+                     X2="1350"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>                
+                <!-- Incommer 9 drop -->
+                <Line X1="1500"
+                     Y1="450"
+                     X2="1500"
+                     Y2="550"
+                     Stroke="Red"
+                     StrokeThickness="5"/>
+
+                <Canvas Visibility="{Binding breakerstatusclose}">
+                    <!-- Incommer Breaker 1 -->
+                    <Line X1="150" Y1="400" X2="150" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose1}"/>
+
+                    <!-- Incommer Breaker 2 -->
+                    <Line X1="300" Y1="400" X2="300" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose2}"/>
+
+                    <!-- Incommer Breaker 3 -->
+                    <Line X1="450" Y1="400" X2="450" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose3}"/>
+
+                    <!-- Incommer Breaker 4 -->
+                    <Line X1="600" Y1="400" X2="600" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose4}"/>
+
+                    <!-- Incommer Breaker 5 -->
+                    <Line X1="750" Y1="400" X2="750" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose5}"/>
+
+                    <!-- Incommer Breaker 6 -->
+                    <Line X1="1050" Y1="400" X2="1050" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose6}"/>
+
+                    <!-- Incommer Breaker 7 -->
+                    <Line X1="1200" Y1="400" X2="1200" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose7}"/>
+
+                    <!-- Incommer Breaker 8 -->
+                    <Line X1="1350" Y1="400" X2="1350" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose8}"/>
+
+                    <!-- Incommer Breaker 9 -->
+                    <Line X1="1500" Y1="400" X2="1500" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose9}"/>
+
+                </Canvas>
+
+                <!-- Breaker -->
+                <Ellipse Width="20"
+                         Height="20"
+                         Fill="LimeGreen"
+                         Canvas.Left="190"
+                         Canvas.Top="180"/>
+
+
+            </Canvas>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

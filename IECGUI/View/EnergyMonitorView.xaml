@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="IECGUI.View.EnergyMonitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IECGUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="930" d:DesignWidth="1920">
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Background="Black" Grid.Row="0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>                  
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="POWER DISTRIBUTION NETWORK"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Button Grid.Column="1" x:Name="BACK" Content="BACK" Foreground="Black" Width="100" HorizontalAlignment="Right" Margin="5,5,5,5" Command="{Binding ReturnToHome}"/>
+            </Grid>
+        </Border>
+        
+
+        <!-- Meter Panels -->
+        <ScrollViewer Grid.Row="1">
+
+            <ItemsControl ItemsSource="{Binding Meters}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Border Margin="8"
+                                Padding="8"
+                                Background="#334B67"
+                                BorderBrush="Black"
+                                BorderThickness="1">
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Meter Header -->
+                                <DockPanel>
+
+                                    <TextBlock Text="{Binding MeterName}"
+                                               Foreground="White"
+                                               FontWeight="Bold"
+                                               FontSize="14"/>
+
+                                    <TextBlock Text="{Binding Energy}"
+                                               Foreground="White"
+                                               HorizontalAlignment="Right"/>
+                                </DockPanel>
+
+                                <!-- Meter Values -->
+                                <Grid Grid.Row="1">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel>
+
+                                        <TextBlock Text="Real Power"
+                                                   Foreground="White" FontSize="18"/>
+
+                                        <TextBlock Text="{Binding RealPower ,StringFormat='{}{0:F2}'}"
+                                                   Foreground="Orange" FontSize="18"/>
+
+                                        <TextBlock Text="Reactive Power"
+                                                   Foreground="White" FontSize="18"/>
+
+                                        <TextBlock Text="{Binding ReactivePower ,StringFormat='{}{0:F2}'}"
+                                                   Foreground="Orange" FontSize="18"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1">
+
+                                        <TextBlock Text="Voltage A-B"
+                                                   Foreground="White" FontSize="18"/>
+
+                                        <TextBlock Text="{Binding VoltageAB ,StringFormat='{}{0:F2}'}"
+                                                   Foreground="LightGreen" FontSize="18"/>
+
+                                        <TextBlock Text="Current A"
+                                                   Foreground="White" FontSize="18"/>
+
+                                        <TextBlock Text="{Binding CurrentA ,StringFormat='{}{0:F2}'}"
+                                                   Foreground="LightGreen" FontSize="18"/>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        
+
+        </ScrollViewer>
+
+        <!-- Event Grid -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Events}"
+                  AutoGenerateColumns="False">
+            
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Time"
+                                    Binding="{Binding Time}"/>
+
+                <DataGridTextColumn Header="Source"
+                                    Binding="{Binding Source}"/>
+
+                <DataGridTextColumn Header="Message"
+                                    Binding="{Binding Message}"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+</UserControl>
