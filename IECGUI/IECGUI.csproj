@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\digital-7.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Threading" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
@@ -21,6 +25,12 @@
     <ProjectReference Include="..\IEC.Shared\IEC.Shared.csproj" />
     <ProjectReference Include="..\IECGUI.Visuals\IECGUI.Visuals.csproj" />
     <ProjectReference Include="..\IECGUI.WPFExtensions\IECGUI.WPFExtensions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\digital-7.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

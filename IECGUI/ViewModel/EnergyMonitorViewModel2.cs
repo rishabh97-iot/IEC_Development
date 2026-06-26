@@ -9,12 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace IECGUI.ViewModel
 {
     public class EnergyMonitorViewModel2 : BaseViewModel
     {
+        private Brush _brush1 = Brushes.Green;
+        public Brush Brush1
+        {   get => _brush1;
+            set => SetProperty(ref _brush1, value);
+        }
 
+        private Brush _brush2 = Brushes.Green;
+        public Brush Brush2
+        {
+            get => _brush2;
+            set => SetProperty(ref _brush2, value);
+        }
 
         public double INC1AMP
         {
@@ -97,13 +109,47 @@ namespace IECGUI.ViewModel
         private async Task LiveDataTimerTick(Dictionary<int, object> parameters)
         {
             // Simulate updating live data
-            INC1AMP = 45 + new Random().NextDouble() * 3;
-            INC2AMP = 35 + new Random().NextDouble() * 2;
+            INC1AMP = 45 + new Random().NextDouble() * 6;
+            INC2AMP = 35 + new Random().NextDouble() * 6;
             INC3AMP = 40 + new Random().NextDouble() * 4;
             INC1VOLT = 9 + new Random().NextDouble() * 2;
             INC2VOLT = 8 + new Random().NextDouble() * 2;
             INC3VOLT = 10 + new Random().NextDouble() * 2;
             await Task.CompletedTask; // Placeholder for any asynchronous operations
+
+            if (INC1AMP > 50 )
+            {
+                Brush1 = Brushes.Red;
+                
+            }
+            if(INC1AMP < 48 && INC1AMP > 45)
+            {
+                Brush1 = Brushes.Orange;
+            }
+            else
+            {
+                Brush1 = Brushes.LimeGreen;
+
+            }
+
+
+
+            if (INC2AMP > 40)
+            {
+                Brush2 = Brushes.Red;
+
+            }
+            if (INC2AMP < 38 && INC2AMP > 36)
+            {
+                Brush2 = Brushes.Orange;
+            }
+            else
+            {
+                Brush2 = Brushes.LimeGreen;
+
+            }
+
+
         }
 
         public void Dispose() => _liveDataTimer?.Dispose();
