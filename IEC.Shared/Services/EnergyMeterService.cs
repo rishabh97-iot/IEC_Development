@@ -64,7 +64,7 @@ namespace IEC.Shared.Services
                     TotalReactivePower = ReadFloat(3068),
                     TotalApparentPower = ReadFloat(3076),
 
-                    Frequency = ReadFloat(3038),
+                    Frequency = ReadFloat(3042),
                     TotalPowerFactor = ReadFloat(3084)
                 };
             });

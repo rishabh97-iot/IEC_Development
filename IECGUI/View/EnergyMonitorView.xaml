@@ -51,70 +51,120 @@
                     <DataTemplate>
 
                         <Border Margin="8"
-                                Padding="8"
-                                Background="#334B67"
-                                BorderBrush="Black"
+                                Width="430"
+                                Height="430"
+                                CornerRadius="20"
+                                Background="#B8B8B8"
+                                BorderBrush="#707070"
                                 BorderThickness="1">
 
-                            <Grid>
+                            <Grid Margin="10">
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="35"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- Meter Header -->
-                                <DockPanel>
+                                <!--================ HEADER =================-->
 
-                                    <TextBlock Text="{Binding MeterName}"
-                                               Foreground="White"
-                                               FontWeight="Bold"
-                                               FontSize="14"/>
+                                <TextBlock Text="{Binding MeterName}"
+                                           Grid.Row="0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="Red"/>
 
-                                    <TextBlock Text="{Binding Energy}"
-                                               Foreground="White"
-                                               HorizontalAlignment="Right"/>
-                                </DockPanel>
+                                <!--================ BODY =================-->
 
-                                <!-- Meter Values -->
                                 <Grid Grid.Row="1">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="2.8*"/>
+                                        <ColumnDefinition Width="1.3*"/>
+                                        <ColumnDefinition Width="0.8*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                    </Grid.RowDefinitions>
 
-                                        <TextBlock Text="Real Power"
-                                                   Foreground="White" FontSize="18"/>
+                                    <!-- Row 1 -->
+                                    <TextBlock Text="Voltage A-N" Grid.Row="0" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding VoltageA_N,StringFormat={}{0:F2}}" Grid.Row="0" Grid.Column="1"/>
+                                    <TextBlock Text="V" Grid.Row="0" Grid.Column="2"/>
 
-                                        <TextBlock Text="{Binding RealPower ,StringFormat='{}{0:F2}'}"
-                                                   Foreground="Orange" FontSize="18"/>
+                                    <!-- Row 2 -->
+                                    <TextBlock Text="Voltage B-N" Grid.Row="1" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding VoltageB_N,StringFormat={}{0:F2}}" Grid.Row="1" Grid.Column="1"/>
+                                    <TextBlock Text="V" Grid.Row="1" Grid.Column="2"/>
 
-                                        <TextBlock Text="Reactive Power"
-                                                   Foreground="White" FontSize="18"/>
+                                    <!-- Row 3 -->
+                                    <TextBlock Text="Voltage C-N" Grid.Row="2" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding VoltageC_N,StringFormat={}{0:F2}}" Grid.Row="2" Grid.Column="1"/>
+                                    <TextBlock Text="V" Grid.Row="2" Grid.Column="2"/>
 
-                                        <TextBlock Text="{Binding ReactivePower ,StringFormat='{}{0:F2}'}"
-                                                   Foreground="Orange" FontSize="18"/>
+                                    <!-- Row 4 -->
+                                    <TextBlock Text="Voltage L-N Avg" Grid.Row="3" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding VoltageL_N_Avg,StringFormat={}{0:F2}}" Grid.Row="3" Grid.Column="1"/>
+                                    <TextBlock Text="V" Grid.Row="3" Grid.Column="2"/>
 
-                                    </StackPanel>
+                                    <!-- Row 5 -->
+                                    <TextBlock Text="Current A" Grid.Row="4" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding CurrentA,StringFormat={}{0:F2}}" Grid.Row="4" Grid.Column="1"/>
+                                    <TextBlock Text="A" Grid.Row="4" Grid.Column="2"/>
 
-                                    <StackPanel Grid.Column="1">
+                                    <!-- Row 6 -->
+                                    <TextBlock Text="Current B" Grid.Row="5" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding CurrentB,StringFormat={}{0:F2}}" Grid.Row="5" Grid.Column="1"/>
+                                    <TextBlock Text="A" Grid.Row="5" Grid.Column="2"/>
 
-                                        <TextBlock Text="Voltage A-B"
-                                                   Foreground="White" FontSize="18"/>
+                                    <!-- Row 7 -->
+                                    <TextBlock Text="Current C" Grid.Row="6" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding CurrentC,StringFormat={}{0:F2}}" Grid.Row="6" Grid.Column="1"/>
+                                    <TextBlock Text="A" Grid.Row="6" Grid.Column="2"/>
 
-                                        <TextBlock Text="{Binding VoltageAB ,StringFormat='{}{0:F2}'}"
-                                                   Foreground="LightGreen" FontSize="18"/>
+                                    <!-- Row 8 -->
+                                    <TextBlock Text="Current Avg" Grid.Row="7" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding CurrentAvg,StringFormat={}{0:F2}}" Grid.Row="7" Grid.Column="1"/>
+                                    <TextBlock Text="A" Grid.Row="7" Grid.Column="2"/>
 
-                                        <TextBlock Text="Current A"
-                                                   Foreground="White" FontSize="18"/>
+                                    <!-- Row 9 -->
+                                    <TextBlock Text="Total Active Power" Grid.Row="8" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding TotalActivePower,StringFormat={}{0:F2}}" Grid.Row="8" Grid.Column="1"/>
+                                    <TextBlock Text="kW" Grid.Row="8" Grid.Column="2"/>
 
-                                        <TextBlock Text="{Binding CurrentA ,StringFormat='{}{0:F2}'}"
-                                                   Foreground="LightGreen" FontSize="18"/>
+                                    <!-- Row 10 -->
+                                    <TextBlock Text="Total Reactive Power" Grid.Row="9" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding TotalReactivePower,StringFormat={}{0:F2}}" Grid.Row="9" Grid.Column="1"/>
+                                    <TextBlock Text="kVAR" Grid.Row="9" Grid.Column="2"/>
 
-                                    </StackPanel>
+                                    <!-- Row 11 -->
+                                    <TextBlock Text="Total Apparent Power" Grid.Row="10" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding TotalApparentPower,StringFormat={}{0:F2}}" Grid.Row="10" Grid.Column="1"/>
+                                    <TextBlock Text="kVA" Grid.Row="10" Grid.Column="2"/>
+
+                                    <!-- Row 12 -->
+                                    <TextBlock Text="Frequency" Grid.Row="11" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding Frequency,StringFormat={}{0:F2}}" Grid.Row="11" Grid.Column="1"/>
+                                    <TextBlock Text="Hz" Grid.Row="11" Grid.Column="2"/>
+
+                                    <!-- Row 13 -->
+                                    <TextBlock Text="Power Factor" Grid.Row="12" Foreground="Blue"/>
+                                    <TextBlock Text="{Binding TotalPowerFactor,StringFormat={}{0:F3}}" Grid.Row="12" Grid.Column="1"/>
+                                    <TextBlock Text="PF" Grid.Row="12" Grid.Column="2"/>
 
                                 </Grid>
 

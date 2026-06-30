@@ -7,45 +7,105 @@ using System.Windows;
 
 namespace IEC.Shared.Models
 {
-    public class MeterViewModel : ObservableObjectVM
+    public class MeterViewModel : ObservableObjectVM   // or whatever your base class is
     {
-        public string _metername;
-        public double _energy;
-        public double _realpower;
-        public double _reactivepower;
-        public double _voltageab;
-        public double _currenta;
+        private string _meterName;
+        private float _voltageA_N;
+        private float _voltageB_N;
+        private float _voltageC_N;
+        private float _voltageL_N_Avg;
+        private float _currentA;
+        private float _currentB;
+        private float _currentC;
+        private float _currentAvg;
+        private float _totalActivePower;
+        private float _totalReactivePower;
+        private float _totalApparentPower;
+        private float _frequency;
+        private float _totalPowerFactor;
+
         public string MeterName
         {
-            get => _metername;
-            set => SetProperty(ref _metername, value);
-        }
-        public double Energy
-        {
-            get => _energy;
-            set => SetProperty(ref _energy, value);
+            get => _meterName;
+            set => SetProperty(ref _meterName, value);
         }
 
-        public double RealPower
+        public float VoltageA_N
         {
-            get => _realpower;
-            set => SetProperty(ref _realpower, value);
-        }
-        public double ReactivePower
-        {
-            get => _reactivepower;
-            set => SetProperty(ref _reactivepower, value);
+            get => _voltageA_N;
+            set => SetProperty(ref _voltageA_N, value);
         }
 
-        public double VoltageAB
+        public float VoltageB_N
         {
-            get => _voltageab;
-            set => SetProperty(ref _voltageab, value);
+            get => _voltageB_N;
+            set => SetProperty(ref _voltageB_N, value);
         }
-        public double CurrentA
+
+        public float VoltageC_N
         {
-            get => _currenta;
-            set => SetProperty(ref _currenta, value);
+            get => _voltageC_N;
+            set => SetProperty(ref _voltageC_N, value);
+        }
+
+        public float VoltageL_N_Avg
+        {
+            get => _voltageL_N_Avg;
+            set => SetProperty(ref _voltageL_N_Avg, value);
+        }
+
+        public float CurrentA
+        {
+            get => _currentA;
+            set => SetProperty(ref _currentA, value);
+        }
+
+        public float CurrentB
+        {
+            get => _currentB;
+            set => SetProperty(ref _currentB, value);
+        }
+
+        public float CurrentC
+        {
+            get => _currentC;
+            set => SetProperty(ref _currentC, value);
+        }
+
+        public float CurrentAvg
+        {
+            get => _currentAvg;
+            set => SetProperty(ref _currentAvg, value);
+        }
+
+        public float TotalActivePower
+        {
+            get => _totalActivePower;
+            set => SetProperty(ref _totalActivePower, value);
+        }
+
+        public float TotalReactivePower
+        {
+            get => _totalReactivePower;
+            set => SetProperty(ref _totalReactivePower, value);
+        }
+
+        public float TotalApparentPower
+        {
+            get => _totalApparentPower;
+            set => SetProperty(ref _totalApparentPower, value);
+        }
+
+        public float Frequency
+        {
+            get => _frequency;
+            set => SetProperty(ref _frequency, value);
+        }
+
+        public float TotalPowerFactor
+        {
+            get => _totalPowerFactor;
+            set => SetProperty(ref _totalPowerFactor, value);
         }
     }
 }

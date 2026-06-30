@@ -19,7 +19,7 @@ namespace IECGUI.ViewModel
         public ICommand ReturnToHome { get; }
 
         private readonly SafePoller _liveDataTimer;
-        private int NoOfMeters=50;
+        private int NoOfMeters=6;
         private readonly IEnergyMeterService _energyMeterService;
 
         public ObservableCollection<MeterViewModel> Meters { get; }
@@ -30,21 +30,35 @@ namespace IECGUI.ViewModel
         {
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(500), RunBackgroundService, ex => Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
-
+            
             _navigation = navigation;
             _energyMeterService = energyMeterService;
+            _energyMeterService.Connect("COM6", 19200, 10);
             Meters = new ObservableCollection<MeterViewModel>();
+         
+
 
             for (int i = 1; i <= NoOfMeters; i++)
             {
                 Meters.Add(new MeterViewModel()
                 {
                     MeterName = $"Meter-{i:00}",
-                    Energy = 12345,
-                    RealPower = 450,
-                    ReactivePower = 120,
-                    VoltageAB = 100+i*i,
-                    CurrentA = 53+i*i,
+
+                    VoltageA_N = 0,
+                    VoltageB_N = 0,
+                    VoltageC_N = 0,
+                    VoltageL_N_Avg = 0,
+
+                    CurrentA = 0,
+                    CurrentB = 0,
+                    CurrentC = 0,
+                    CurrentAvg = 0,
+
+                    TotalActivePower = 0,
+                    TotalReactivePower = 0,
+                    TotalApparentPower = 0,
+                    Frequency = 0,
+                    TotalPowerFactor = 0,
                 });
             }
             //_cts = new CancellationTokenSource();
@@ -58,15 +72,34 @@ namespace IECGUI.ViewModel
 
         public async Task MetersRuntime()
         {
-            for(int i = 0; i < NoOfMeters; i++)
+            try
             {
-                Meters[i].CurrentA = 45 + new Random().NextDouble() * 3;
-                Meters[i].VoltageAB = 220 + new Random().NextDouble() * 3;
-                Meters[i].Energy = 120 + new Random().Next(0, 10);
-                Meters[i].RealPower = 450 + new Random().Next(0, 10);
-                Meters[i].ReactivePower = 120 + new Random().Next(0, 10);
+                var reading = await _energyMeterService.ReadAsync();
+
+                for (int i = 0; i < Meters.Count; i++)
+                {
+                    Meters[i].VoltageA_N = reading.VoltageA_N;
+                    Meters[i].VoltageB_N = reading.VoltageB_N;
+                    Meters[i].VoltageC_N = reading.VoltageC_N;
+                    Meters[i].VoltageL_N_Avg = reading.VoltageL_N_Avg;
+
+                    Meters[i].CurrentA = reading.CurrentA;
+                    Meters[i].CurrentB = reading.CurrentB;
+                    Meters[i].CurrentC = reading.CurrentC;
+                    Meters[i].CurrentAvg = reading.CurrentAvg;
+
+                    Meters[i].TotalActivePower = reading.TotalActivePower;
+                    Meters[i].TotalReactivePower = reading.TotalReactivePower;
+                    Meters[i].TotalApparentPower = reading.TotalApparentPower;
+
+                    Meters[i].Frequency = reading.Frequency;
+                    Meters[i].TotalPowerFactor = reading.TotalPowerFactor;
+                }
             }
-         
+            catch (Exception ex)
+            {
+                Console.WriteLine($"MetersRuntime error: {ex.Message}");
+            }
         }
 
         public async Task RunBackgroundService(Dictionary<int, object> parameters)

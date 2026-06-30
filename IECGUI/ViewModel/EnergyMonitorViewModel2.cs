@@ -122,12 +122,12 @@ namespace IECGUI.ViewModel
             _meterService.Connect("COM6", 19200, 10);
             BackCommand = new RelayCommand(NavigateToHome);
 
-            INC1AMP = 12.34;
-            INC2AMP = 56.34;
-            INC3AMP = 45.34;
-            INC1VOLT = 10.9;
-            INC2VOLT = 9.89;
-            INC3VOLT = 11.02;
+            INC1AMP = 0.0;
+            INC2AMP = 0.0;
+            INC3AMP = 0.0;
+            INC1VOLT = 0.0;
+            INC2VOLT = 0.0;
+            INC3VOLT = 0.0;
 
         }
 
