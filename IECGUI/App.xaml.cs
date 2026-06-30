@@ -33,7 +33,7 @@ namespace IECGUI
             services.AddTransient<Dashboard1ViewModel>();
             services.AddTransient<EnergyMonitorViewModel>();
             services.AddTransient<EnergyMonitorViewModel2>();
-
+            services.AddSingleton<ConfigurationManagerService>();
             // Views
             services.AddTransient<MainWindow>();
 
