@@ -119,7 +119,7 @@ namespace IECGUI.ViewModel
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(1000), PollAsync, ex=>Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
             _meterService = meterService;
-            _meterService.Connect("COM6", 19200, 10);
+            //_meterService.Connect("COM6", 19200, 10);
             BackCommand = new RelayCommand(NavigateToHome);
 
             INC1AMP = 0.0;
@@ -139,30 +139,30 @@ namespace IECGUI.ViewModel
         {
             try
             {
-                var reading = await _meterService.ReadAsync();
+                //var reading = await _meterService.ReadAsync();
 
-                VoltageA_N = reading.VoltageA_N;
-                VoltageB_N = reading.VoltageB_N;
-                VoltageC_N = reading.VoltageC_N;
-                VoltageAvg = reading.VoltageL_N_Avg;
+                //VoltageA_N = reading.VoltageA_N;
+                //VoltageB_N = reading.VoltageB_N;
+                //VoltageC_N = reading.VoltageC_N;
+                //VoltageAvg = reading.VoltageL_N_Avg;
 
-                CurrentA = reading.CurrentA;
-                CurrentB = reading.CurrentB;
-                CurrentC = reading.CurrentC;
-                CurrentAvg = reading.CurrentAvg;
+                //CurrentA = reading.CurrentA;
+                //CurrentB = reading.CurrentB;
+                //CurrentC = reading.CurrentC;
+                //CurrentAvg = reading.CurrentAvg;
 
-                TotalActivePower = reading.TotalActivePower;
-                TotalReactivePower = reading.TotalReactivePower;
-                TotalApparentPower = reading.TotalApparentPower;
+                //TotalActivePower = reading.TotalActivePower;
+                //TotalReactivePower = reading.TotalReactivePower;
+                //TotalApparentPower = reading.TotalApparentPower;
 
-                Frequency = reading.Frequency;
-                TotalPowerFactor = reading.TotalPowerFactor;
+                //Frequency = reading.Frequency;
+                //TotalPowerFactor = reading.TotalPowerFactor;
 
-                INC1VOLT = VoltageA_N;
-                INC2VOLT = VoltageB_N;
-                INC3VOLT = VoltageC_N;
+                //INC1VOLT = VoltageA_N;
+                //INC2VOLT = VoltageB_N;
+                //INC3VOLT = VoltageC_N;
 
-                INC1AMP = Frequency;
+                //INC1AMP = Frequency;
 
 
             }

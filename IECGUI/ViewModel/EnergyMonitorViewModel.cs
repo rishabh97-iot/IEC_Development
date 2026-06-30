@@ -5,6 +5,7 @@ using IPCSoftware.Common.CommonExtensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -21,21 +22,29 @@ namespace IECGUI.ViewModel
         private readonly SafePoller _liveDataTimer;
         private int NoOfMeters=6;
         private readonly IEnergyMeterService _energyMeterService;
+        private readonly IMultiEnergyMeterService _multiEnergyMeterService;
 
         public ObservableCollection<MeterViewModel> Meters { get; }
         private readonly INavigationService _navigation;
 
         private CancellationTokenSource _cts;
-        public EnergyMonitorViewModel(INavigationService navigation , IEnergyMeterService energyMeterService)
+        public EnergyMonitorViewModel(INavigationService navigation , IEnergyMeterService energyMeterService , IMultiEnergyMeterService multiEnergyMeterService)
         {
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(500), RunBackgroundService, ex => Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
-            
+            _multiEnergyMeterService = multiEnergyMeterService;
             _navigation = navigation;
             _energyMeterService = energyMeterService;
-            _energyMeterService.Connect("COM6", 19200, 10);
+           // _energyMeterService.Connect("COM6", 19200, 10);
             Meters = new ObservableCollection<MeterViewModel>();
-         
+
+            _multiEnergyMeterService.Configure(new[]
+            {
+                new MeterConfig { MeterName = "Meter-01", PortName = "COM6", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 }
+                //new MeterConfig { MeterName = "Meter-02", PortName = "COM6", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 },
+                
+            });
+
 
 
             for (int i = 1; i <= NoOfMeters; i++)
@@ -66,7 +75,7 @@ namespace IECGUI.ViewModel
 
             ReturnToHome = new RelayCommand(NavigateToHome);
 
-            _ =  MetersRuntime();
+           
 
         }
 
@@ -74,27 +83,27 @@ namespace IECGUI.ViewModel
         {
             try
             {
-                var reading = await _energyMeterService.ReadAsync();
+                //var reading = await _energyMeterService.ReadAsync();
 
-                for (int i = 0; i < Meters.Count; i++)
-                {
-                    Meters[i].VoltageA_N = reading.VoltageA_N;
-                    Meters[i].VoltageB_N = reading.VoltageB_N;
-                    Meters[i].VoltageC_N = reading.VoltageC_N;
-                    Meters[i].VoltageL_N_Avg = reading.VoltageL_N_Avg;
+                //for (int i = 0; i < Meters.Count; i++)
+                //{
+                //    Meters[i].VoltageA_N = reading.VoltageA_N;
+                //    Meters[i].VoltageB_N = reading.VoltageB_N;
+                //    Meters[i].VoltageC_N = reading.VoltageC_N;
+                //    Meters[i].VoltageL_N_Avg = reading.VoltageL_N_Avg;
 
-                    Meters[i].CurrentA = reading.CurrentA;
-                    Meters[i].CurrentB = reading.CurrentB;
-                    Meters[i].CurrentC = reading.CurrentC;
-                    Meters[i].CurrentAvg = reading.CurrentAvg;
+                //    Meters[i].CurrentA = reading.CurrentA;
+                //    Meters[i].CurrentB = reading.CurrentB;
+                //    Meters[i].CurrentC = reading.CurrentC;
+                //    Meters[i].CurrentAvg = reading.CurrentAvg;
 
-                    Meters[i].TotalActivePower = reading.TotalActivePower;
-                    Meters[i].TotalReactivePower = reading.TotalReactivePower;
-                    Meters[i].TotalApparentPower = reading.TotalApparentPower;
+                //    Meters[i].TotalActivePower = reading.TotalActivePower;
+                //    Meters[i].TotalReactivePower = reading.TotalReactivePower;
+                //    Meters[i].TotalApparentPower = reading.TotalApparentPower;
 
-                    Meters[i].Frequency = reading.Frequency;
-                    Meters[i].TotalPowerFactor = reading.TotalPowerFactor;
-                }
+                //    Meters[i].Frequency = reading.Frequency;
+                //    Meters[i].TotalPowerFactor = reading.TotalPowerFactor;
+                //}
             }
             catch (Exception ex)
             {
@@ -102,9 +111,49 @@ namespace IECGUI.ViewModel
             }
         }
 
+        public async Task MultiMeterRuntime()
+        {
+            try
+            {
+                var readings = await _multiEnergyMeterService.ReadAllAsync();
+                foreach (var meter in Meters)
+                {
+                    if (readings.TryGetValue(meter.MeterName, out var reading) && reading != null)
+                    {
+                        meter.VoltageA_N = reading.VoltageA_N;
+                        meter.VoltageB_N = reading.VoltageB_N;
+                        meter.VoltageC_N = reading.VoltageC_N;
+                        meter.VoltageL_N_Avg = reading.VoltageL_N_Avg;
+                        meter.CurrentA = reading.CurrentA;
+                        meter.CurrentB = reading.CurrentB;
+                        meter.CurrentC = reading.CurrentC;
+                        meter.CurrentAvg = reading.CurrentAvg;
+                        meter.TotalActivePower = reading.TotalActivePower;
+                        meter.TotalReactivePower = reading.TotalReactivePower;
+                        meter.TotalApparentPower = reading.TotalApparentPower;
+                        meter.Frequency = reading.Frequency;
+                        meter.TotalPowerFactor = reading.TotalPowerFactor;
+                    }
+                    else
+                    {
+                        // Handle the case where the reading is null or not found
+                        Console.WriteLine($"No data for {meter.MeterName}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"MultiMeterRuntime error: {ex.Message}");
+            }
+        }
+
+
+
+
         public async Task RunBackgroundService(Dictionary<int, object> parameters)
         {
-            await MetersRuntime();
+           // await MetersRuntime();
+            await MultiMeterRuntime();
         }
 
         private void NavigateToHome()

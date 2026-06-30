@@ -24,6 +24,7 @@ namespace IECGUI
 
             // Services
             services.AddSingleton<IEnergyMeterService, EnergyMeterService>();
+            services.AddSingleton<IMultiEnergyMeterService, MultiEnergyMeterService>();
             services.AddSingleton<INavigationService, NavigationService>();
 
             // ViewModels
