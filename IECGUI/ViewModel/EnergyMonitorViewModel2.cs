@@ -1,4 +1,5 @@
 ﻿using IEC.Shared.Models;
+using IEC.Shared.Services;
 using IECGUI.Services;
 using IPCSoftware.Common.CommonExtensions;
 using System;
@@ -10,11 +11,37 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace IECGUI.ViewModel
 {
     public class EnergyMonitorViewModel2 : BaseViewModel
     {
+        private readonly IEnergyMeterService _meterService;
+        private readonly DispatcherTimer _pollTimer;
+
+        public double VoltageA_N { get => _voltageA_N; set { _voltageA_N = value; OnPropertyChanged(); } }
+        public double VoltageB_N { get => _voltageB_N; set { _voltageB_N = value; OnPropertyChanged(); } }
+        public double VoltageC_N { get => _voltageC_N; set { _voltageC_N = value; OnPropertyChanged(); } }
+        public double VoltageAvg { get => _voltageAvg; set { _voltageAvg = value; OnPropertyChanged(); } }
+
+        public double CurrentA { get => _currentA; set { _currentA = value; OnPropertyChanged(); } }
+        public double CurrentB { get => _currentB; set { _currentB = value; OnPropertyChanged(); } }
+        public double CurrentC { get => _currentC; set { _currentC = value; OnPropertyChanged(); } }
+        public double CurrentAvg { get => _currentAvg; set { _currentAvg = value; OnPropertyChanged(); } }
+
+        public double TotalActivePower { get => _totalActivePower; set { _totalActivePower = value; OnPropertyChanged(); } }
+        public double TotalReactivePower { get => _totalReactivePower; set { _totalReactivePower = value; OnPropertyChanged(); } }
+        public double TotalApparentPower { get => _totalApparentPower; set { _totalApparentPower = value; OnPropertyChanged(); } }
+        public double Frequency { get => _frequency; set { _frequency = value; OnPropertyChanged(); } }
+        public double TotalPowerFactor { get => _totalPowerFactor; set { _totalPowerFactor = value; OnPropertyChanged(); } }
+
+        private double _voltageA_N, _voltageB_N, _voltageC_N, _voltageAvg;
+        private double _currentA, _currentB, _currentC, _currentAvg;
+        private double _totalActivePower, _totalReactivePower, _totalApparentPower;
+        private double _frequency, _totalPowerFactor;
+
+
         private Brush _brush1 = Brushes.Green;
         public Brush Brush1
         {   get => _brush1;
@@ -83,12 +110,16 @@ namespace IECGUI.ViewModel
         private readonly INavigationService _navigation;
 
         private CancellationTokenSource _cts;
-        public EnergyMonitorViewModel2(INavigationService navigation)
+        public EnergyMonitorViewModel2(INavigationService navigation , IEnergyMeterService meterService)
         {
-            _navigation = navigation;
-            _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(1000), LiveDataTimerTick, ex=>Console.WriteLine(ex.Message));
-            _liveDataTimer.Start();
+            if (meterService == null)
+                throw new ArgumentNullException(nameof(meterService), "IEnergyMeterService was not injected — check DI registration.");
 
+            _navigation = navigation;
+            _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(1000), PollAsync, ex=>Console.WriteLine(ex.Message));
+            _liveDataTimer.Start();
+            _meterService = meterService;
+            _meterService.Connect("COM6", 19200, 10);
             BackCommand = new RelayCommand(NavigateToHome);
 
             INC1AMP = 12.34;
@@ -102,9 +133,45 @@ namespace IECGUI.ViewModel
 
         private void NavigateToHome()
         {
-            _navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
+            _navigation.NavigateTo<Dashboard1ViewModel>();
         }
+        private async Task PollAsync(Dictionary<int, object> parameters)
+        {
+            try
+            {
+                var reading = await _meterService.ReadAsync();
 
+                VoltageA_N = reading.VoltageA_N;
+                VoltageB_N = reading.VoltageB_N;
+                VoltageC_N = reading.VoltageC_N;
+                VoltageAvg = reading.VoltageL_N_Avg;
+
+                CurrentA = reading.CurrentA;
+                CurrentB = reading.CurrentB;
+                CurrentC = reading.CurrentC;
+                CurrentAvg = reading.CurrentAvg;
+
+                TotalActivePower = reading.TotalActivePower;
+                TotalReactivePower = reading.TotalReactivePower;
+                TotalApparentPower = reading.TotalApparentPower;
+
+                Frequency = reading.Frequency;
+                TotalPowerFactor = reading.TotalPowerFactor;
+
+                INC1VOLT = VoltageA_N;
+                INC2VOLT = VoltageB_N;
+                INC3VOLT = VoltageC_N;
+
+                INC1AMP = Frequency;
+
+
+            }
+            catch (Exception ex)
+            {
+                // log/show error state
+                Console.WriteLine($"Poll error: {ex.Message}");
+            }
+        }
 
         private async Task LiveDataTimerTick(Dictionary<int, object> parameters)
         {

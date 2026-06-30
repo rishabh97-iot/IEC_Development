@@ -1,4 +1,5 @@
-﻿using IECGUI.ViewModel;
+﻿using IEC.Shared.Services;
+using IECGUI.ViewModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,11 +20,12 @@ namespace IECGUI
     public partial class MainWindow : Window
     {
         public object CurrentView { get; set; }
-        public MainWindow()
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
-            
+            DataContext = viewModel;
+
+
         }
     }
 }

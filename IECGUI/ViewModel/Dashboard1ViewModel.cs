@@ -1,4 +1,5 @@
-﻿using IECGUI.Services;
+﻿using IEC.Shared.Services;
+using IECGUI.Services;
 using IECGUI.ViewModel;
 using IPCSoftware.Common.CommonExtensions;
 using System;
@@ -19,6 +20,8 @@ namespace IECGUI.ViewModel
         private readonly SafePoller _liveDataTimer;
 
         private readonly INavigationService _navigation;
+
+        private readonly IEnergyMeterService _energyMeterService;
         public ICommand EventsCommand { get; }
 
         public ICommand HomeCommand { get; }
@@ -543,12 +546,16 @@ namespace IECGUI.ViewModel
 
 
 
-        public Dashboard1ViewModel(INavigationService navigation)
+        public Dashboard1ViewModel(INavigationService navigation , IEnergyMeterService energyMeterService)
         {
+            if (energyMeterService == null)
+                throw new ArgumentNullException(nameof(energyMeterService), "IEnergyMeterService was not injected — check DI registration.");
+
+            _energyMeterService = energyMeterService;
             _navigation = navigation;
             EventsCommand = new RelayCommand(OpenRelayCard);
-            HomeCommand = new RelayCommand(() => _navigation.NavigateTo( new EnergyMonitorViewModel(_navigation))); //_navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
-            AlarmCommand = new RelayCommand(() => _navigation.NavigateTo(new EnergyMonitorViewModel2(_navigation)));
+            HomeCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel>()); //_navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
+            AlarmCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel2>());
             // TrendingCommand = new RelayCommand(() => _navigation.NavigateTo<TrendingViewModel>());
             // ReportsCommand = new RelayCommand(() => _navigation.NavigateTo<ReportsViewModel>());
 

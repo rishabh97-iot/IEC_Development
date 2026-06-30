@@ -5,7 +5,7 @@
              xmlns:view="clr-namespace:IECGUI.View"
              xmlns:controls="clr-namespace:IECGUI.Controls"
              xmlns:local="clr-namespace:IECGUI"
-             StartupUri="MainWindow.xaml">
+             >
     <Application.Resources>
 
         <ResourceDictionary>

@@ -96,7 +96,7 @@
             </Grid>
 
             <Grid Grid.Row="1"  Width="Auto" VerticalAlignment="Center" >                
-                <ContentControl Content="{Binding Navigation.CurrentViewModel}"  />
+                <ContentControl Content="{Binding Navigation.CurrentView}"  />
             </Grid>
             <!--<Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>

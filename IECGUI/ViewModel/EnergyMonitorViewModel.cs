@@ -1,4 +1,5 @@
 ﻿using IEC.Shared.Models;
+using IEC.Shared.Services;
 using IECGUI.Services;
 using IPCSoftware.Common.CommonExtensions;
 using System;
@@ -19,17 +20,19 @@ namespace IECGUI.ViewModel
 
         private readonly SafePoller _liveDataTimer;
         private int NoOfMeters=50;
+        private readonly IEnergyMeterService _energyMeterService;
 
         public ObservableCollection<MeterViewModel> Meters { get; }
         private readonly INavigationService _navigation;
 
         private CancellationTokenSource _cts;
-        public EnergyMonitorViewModel(INavigationService navigation)
+        public EnergyMonitorViewModel(INavigationService navigation , IEnergyMeterService energyMeterService)
         {
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(500), RunBackgroundService, ex => Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
 
             _navigation = navigation;
+            _energyMeterService = energyMeterService;
             Meters = new ObservableCollection<MeterViewModel>();
 
             for (int i = 1; i <= NoOfMeters; i++)
@@ -73,7 +76,7 @@ namespace IECGUI.ViewModel
 
         private void NavigateToHome()
         {
-            _navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
+            _navigation.NavigateTo<Dashboard1ViewModel>();
         }
     }
 }
