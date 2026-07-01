@@ -7,6 +7,7 @@ using System.IO.Ports;
 using NModbus;
 using NModbus.Serial;
 using NModbus.Utility;
+using System.Diagnostics;
 
 namespace IEC.Shared.Services
 {
@@ -15,6 +16,8 @@ namespace IEC.Shared.Services
         // One physical port shares one SerialPort + one master, serving multiple slave IDs
         private class PortConnection
         {
+            public bool IsConnected { get; set; }
+            public string Error { get; set; }
             public SerialPort Port;
             public IModbusSerialMaster Master;
         }
@@ -43,11 +46,17 @@ namespace IEC.Shared.Services
                     try
                     {
                         port.Open();
+
+                        _portConnections[meter.PortName] =  new PortConnection { IsConnected = true, Port = port};
                     }
                     catch (UnauthorizedAccessException ex)
                     {
-                        throw new InvalidOperationException(
-                            $"Port '{meter.PortName}' is already in use.", ex);
+                        _portConnections[meter.PortName] =
+                            new PortConnection
+                            {
+                                IsConnected = false,
+                                Error = ex.Message
+                            };
                     }
 
                     var factory = new ModbusFactory();
@@ -69,7 +78,7 @@ namespace IEC.Shared.Services
         public async Task<Dictionary<string, EnergyMeterReading>> ReadAllAsync()
         {
             var results = new Dictionary<string, EnergyMeterReading>();
-
+            
             foreach (var meter in _meters.Values)
             {
                 try

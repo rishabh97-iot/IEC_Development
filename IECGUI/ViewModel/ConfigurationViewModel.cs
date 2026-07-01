@@ -1,19 +1,22 @@
-﻿using System;
+﻿using IEC.Shared.Models;
+using IEC.Shared.Services;
+using IECGUI.Services;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IEC.Shared.Models;
-using IEC.Shared.Services;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.IO.Ports;
 
 namespace IECGUI.ViewModel
 {
     public class ConfigurationViewModel : BaseViewModel
     {
         private readonly ConfigurationManagerService _config;
+
+        private readonly INavigationService _navigation;
 
         private MetersConfig _selectedMeter;
 
@@ -25,14 +28,16 @@ namespace IECGUI.ViewModel
 
         public ObservableCollection<MetersConfig> Meters { get; }
 
+        public ICommand MenuCommand { get; }
+
         public ICommand AddMeterCommand { get; }
         public ICommand DeleteMeterCommand { get; }
         public ICommand SaveCommand { get; }
 
-        public ConfigurationViewModel( ConfigurationManagerService config)
+        public ConfigurationViewModel(INavigationService navigation, ConfigurationManagerService config)
         {
             _config =config;
-
+            _navigation = navigation;
             Meters = new ObservableCollection<MetersConfig>(
                 _config.Configuration.Meters);
 
@@ -44,6 +49,8 @@ namespace IECGUI.ViewModel
 
             SaveCommand =
                 new RelayCommand(Save);
+
+            MenuCommand = new RelayCommand(() => _navigation.NavigateTo<HomePageViewModel>());
         }
 
 

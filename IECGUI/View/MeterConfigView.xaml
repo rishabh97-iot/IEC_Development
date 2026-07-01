@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="IECGUI.View.MeterConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IECGUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="930" d:DesignWidth="1920">
+    <Grid Margin="5" Background="Beige" Height="930" Width="1920">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+        <Border  Grid.Row="0"
+            BorderThickness="1" 
+            Margin="5">
+            <Button Content="Menu" Command="{Binding MenuCommand}" Height="40" Width="100"  HorizontalAlignment="Left"/>            
+        </Border>
+
+        <!-- LEFT PANEL -->
+
+        <Border BorderBrush="Gray" Grid.Column="0" Grid.Row="1"
+            BorderThickness="1" Height="430" Width="200"
+            Margin="5">
+
+            <DockPanel>
+                <Button DockPanel.Dock="Bottom"
+                    Content="Delete Meter"
+                    Height="35"
+                    Margin="5"
+                    Command="{Binding DeleteMeterCommand}"/>
+                
+                <Button DockPanel.Dock="Bottom"
+                    Content="Add Meter"
+                    Height="35"
+                    Margin="5"
+                    Command="{Binding AddMeterCommand}"/>
+
+
+
+                <ListBox ItemsSource="{Binding Meters}"
+                     SelectedItem="{Binding SelectedMeter}">
+
+                    <ListBox.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <TextBlock Text="{Binding MeterName}"
+                                   FontSize="16"/>
+
+                        </DataTemplate>
+
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+            </DockPanel>
+
+        </Border>
+
+        <!-- RIGHT PANEL -->
+
+        <Border Grid.Column="1" Height="430" Width="250"  Grid.Row="1"
+            Margin="5"
+            BorderBrush="Gray"
+            BorderThickness="1"
+            Padding="10">
+
+            <StackPanel>
+
+                <TextBlock Text="Meter Name" Margin="0,10,0,0"/>
+                <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0"/>
+
+                <TextBlock Margin="0,30,0,0"
+                       Text="COM Port"/>
+
+                <TextBox Text="{Binding SelectedMeter.Communication.ComPort}" Margin="0,10,0,0"/>
+
+                <TextBlock Margin="0,30,0,0"
+                       Text="Baud Rate"/>
+
+                <TextBox Text="{Binding SelectedMeter.Communication.BaudRate}" Margin="0,10,0,0"/>
+
+                <TextBlock Margin="0,30,0,0"
+                       Text="Slave ID"/>
+
+                <TextBox Text="{Binding SelectedMeter.Communication.SlaveId}"  Margin="0,10,0,0"/>
+
+                <Button Margin="0,80,0,0"
+                    Height="40"
+                    Content="Save Configuration"
+                    Command="{Binding SaveCommand}"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</UserControl>

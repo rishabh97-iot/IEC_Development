@@ -6,27 +6,27 @@
              xmlns:local="clr-namespace:IECGUI.View"
              mc:Ignorable="d" 
              d:DesignHeight="930" d:DesignWidth="1920"
-             Background="Black">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="200"/>           
-        </Grid.RowDefinitions>
+             Background="Transparent">
+    <Grid Width="1920" Height="930">
+        <Image Source="pack://application:,,,/IECGUI.Visuals;component/Images/Power1.jpg"
+            Stretch="UniformToFill"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Image.Effect>
+                <BlurEffect Radius="20"/>
+            </Image.Effect>
+        </Image>
 
-        <Grid Grid.Row="0" Margin="5" Background="AliceBlue"></Grid>
-        <Grid Grid.Row="1" Margin="5" Background="WhiteSmoke">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="5" >
 
-            </Grid> 
+        <StackPanel Orientation="Horizontal" Margin="100">
+            <Button Content="SLD View" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding SldViewCommand}" Foreground="White" Background="Black"/>
+            <Button Content="Energy Monitor" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding EnergyViewCommand}" Foreground="White" Background="Black"/>
+            <Button Content="GaugeView" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding GaugeViewCommand}" Foreground="White" Background="Black"/>
+            <Button Content="Config View" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ConfigViewCommand}" Foreground="White" Background="Black"/>
 
-        </Grid>
-        <Grid Grid.Row="2" Margin="5" Background="AliceBlue"></Grid>
+        </StackPanel>
+
+
 
     </Grid>
 </UserControl>

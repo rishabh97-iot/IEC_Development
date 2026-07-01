@@ -26,14 +26,16 @@ namespace IECGUI
             services.AddSingleton<IEnergyMeterService, EnergyMeterService>();
             services.AddSingleton<IMultiEnergyMeterService, MultiEnergyMeterService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<ConfigurationManagerService>();
 
             // ViewModels
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<Dashboard1ViewModel>();
             services.AddTransient<EnergyMonitorViewModel>();
-            services.AddTransient<EnergyMonitorViewModel2>();
-            services.AddSingleton<ConfigurationManagerService>();
+            services.AddTransient<EnergyMonitorViewModel2>();            
+            services.AddSingleton<ConfigurationViewModel>();
+            services.AddSingleton<HomePageViewModel>();
             // Views
             services.AddTransient<MainWindow>();
 

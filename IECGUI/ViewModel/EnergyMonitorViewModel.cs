@@ -38,12 +38,7 @@ namespace IECGUI.ViewModel
            // _energyMeterService.Connect("COM6", 19200, 10);
             Meters = new ObservableCollection<MeterViewModel>();
 
-            _multiEnergyMeterService.Configure(new[]
-            {
-                new MeterConfig { MeterName = "Meter-01", PortName = "COM6", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 }
-                //new MeterConfig { MeterName = "Meter-02", PortName = "COM6", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 },
-                
-            });
+
 
 
 
@@ -76,6 +71,17 @@ namespace IECGUI.ViewModel
             ReturnToHome = new RelayCommand(NavigateToHome);
 
            
+
+        }
+
+        public async Task ConnectMeters() 
+        {
+            _multiEnergyMeterService.Configure(new[]
+{
+                new MeterConfig { MeterName = "Meter-01", PortName = "COM3", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 }
+                //new MeterConfig { MeterName = "Meter-02", PortName = "COM6", BaudRate = 19200, Parity = Parity.Even, SlaveId = 11 },
+                
+            });
 
         }
 
@@ -158,7 +164,7 @@ namespace IECGUI.ViewModel
 
         private void NavigateToHome()
         {
-            _navigation.NavigateTo<Dashboard1ViewModel>();
+            _navigation.NavigateTo<HomePageViewModel>();
         }
     }
 }

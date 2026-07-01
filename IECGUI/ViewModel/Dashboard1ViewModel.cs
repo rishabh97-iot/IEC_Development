@@ -30,7 +30,7 @@ namespace IECGUI.ViewModel
 
         public ICommand TrendingCommand { get; }
 
-        public ICommand ReportsCommand { get; }
+        public ICommand MenuCommand { get; }
 
         public ICommand INCBRK1OPEN { get; set; }
 
@@ -525,10 +525,6 @@ namespace IECGUI.ViewModel
         }
 
 
-
-
-
-
         private bool _status1 =false;
         private bool _status2 = false;
         private bool _status3 = false;
@@ -556,8 +552,8 @@ namespace IECGUI.ViewModel
             EventsCommand = new RelayCommand(OpenRelayCard);
             HomeCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel>()); //_navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
             AlarmCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel2>());
-            // TrendingCommand = new RelayCommand(() => _navigation.NavigateTo<TrendingViewModel>());
-            // ReportsCommand = new RelayCommand(() => _navigation.NavigateTo<ReportsViewModel>());
+            TrendingCommand = new RelayCommand(() => _navigation.NavigateTo<ConfigurationViewModel>());
+            MenuCommand = new RelayCommand(() => _navigation.NavigateTo<HomePageViewModel>());
 
 
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(100), RunBackgroundService, ex => Console.WriteLine(ex.Message));

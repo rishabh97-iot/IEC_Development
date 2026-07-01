@@ -66,7 +66,7 @@ namespace IECGUI.ViewModel
                 {
                     // Successful login
                    // MessageBox.Show("Login successful!", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _navigation.NavigateTo<Dashboard1ViewModel>();
+                    _navigation.NavigateTo<HomePageViewModel>();
                     //_navigation.NavigateTo(new MainWindowViewModel());
 
 

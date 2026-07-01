@@ -35,6 +35,11 @@
             <DataTemplate DataType="{x:Type vm:EnergyMonitorViewModel2}">
                 <view:EnergyMonitor2/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ConfigurationViewModel}">
+                <view:MeterConfigView/>
+            </DataTemplate>
+
+
 
 
         </ResourceDictionary>
