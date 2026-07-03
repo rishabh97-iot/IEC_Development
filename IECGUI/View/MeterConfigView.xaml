@@ -6,100 +6,266 @@
              xmlns:local="clr-namespace:IECGUI.View"
              mc:Ignorable="d" 
              d:DesignHeight="930" d:DesignWidth="1920">
-    <Grid Margin="5" Background="Beige" Height="930" Width="1920">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="450"/>
-            <ColumnDefinition Width="350"/>
-        </Grid.ColumnDefinitions>
-
-        <Border  Grid.Row="0"
-            BorderThickness="1" 
-            Margin="5">
-            <Button Content="Menu" Command="{Binding MenuCommand}" Height="40" Width="100"  HorizontalAlignment="Left"/>            
-        </Border>
-
-        <!-- LEFT PANEL -->
-
-        <Border BorderBrush="Gray" Grid.Column="0" Grid.Row="1"
-            BorderThickness="1" Height="430" Width="200"
-            Margin="5">
-
-            <DockPanel>
-                <Button DockPanel.Dock="Bottom"
-                    Content="Delete Meter"
-                    Height="35"
-                    Margin="5"
-                    Command="{Binding DeleteMeterCommand}"/>
-                
-                <Button DockPanel.Dock="Bottom"
-                    Content="Add Meter"
-                    Height="35"
-                    Margin="5"
-                    Command="{Binding AddMeterCommand}"/>
+    <Grid Margin="5" Background="White" Height="930" Width="1920">
 
 
 
-                <ListBox ItemsSource="{Binding Meters}"
-                     SelectedItem="{Binding SelectedMeter}">
+        <TabControl Background="Transparent">
+            <TabControl.Resources>
 
-                    <ListBox.ItemTemplate>
+                <!-- SCADA Tab Style -->
+                <Style TargetType="TabItem">
 
-                        <DataTemplate>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#0F5BC4"/>
+                    <Setter Property="BorderBrush" Value="#3D7EFF"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="FontSize" Value="24"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Padding" Value="20,8"/>
 
-                            <TextBlock Text="{Binding MeterName}"
-                                   FontSize="16"/>
+                    <Setter Property="Template">
 
-                        </DataTemplate>
+                        <Setter.Value>
 
-                    </ListBox.ItemTemplate>
+                            <ControlTemplate TargetType="TabItem">
 
-                </ListBox>
+                                <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5,5,0,0"
+                                Margin="2,2,2,0">
 
-            </DockPanel>
+                                    <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ContentSource="Header"
+                                Margin="10,4"/>
 
-        </Border>
+                                </Border>
 
-        <!-- RIGHT PANEL -->
+                                <ControlTemplate.Triggers>
 
-        <Border Grid.Column="1" Height="430" Width="250"  Grid.Row="1"
-            Margin="5"
-            BorderBrush="Gray"
-            BorderThickness="1"
-            Padding="10">
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#0078D7"/>
+                                    </Trigger>
 
-            <StackPanel>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#1C4DA1"/>
+                                    </Trigger>
 
-                <TextBlock Text="Meter Name" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0"/>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border"
+                                        Property="Background"
+                                        Value="#2A6BD8"/>
+                                    </Trigger>
 
-                <TextBlock Margin="0,30,0,0"
-                       Text="COM Port"/>
+                                </ControlTemplate.Triggers>
 
-                <TextBox Text="{Binding SelectedMeter.Communication.ComPort}" Margin="0,10,0,0"/>
+                            </ControlTemplate>
 
-                <TextBlock Margin="0,30,0,0"
-                       Text="Baud Rate"/>
+                        </Setter.Value>
 
-                <TextBox Text="{Binding SelectedMeter.Communication.BaudRate}" Margin="0,10,0,0"/>
+                    </Setter>
 
-                <TextBlock Margin="0,30,0,0"
-                       Text="Slave ID"/>
+                </Style>
 
-                <TextBox Text="{Binding SelectedMeter.Communication.SlaveId}"  Margin="0,10,0,0"/>
+            </TabControl.Resources>            
 
-                <Button Margin="0,80,0,0"
-                    Height="40"
-                    Content="Save Configuration"
-                    Command="{Binding SaveCommand}"/>
+            <!-- Meter List Tab-->
+            <TabItem Header="Meter List" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
 
-            </StackPanel>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Content="Back to Main Menu" Command="{Binding MenuCommand}"/>
 
-        </Border>
+                    <Border BorderBrush="Gray"  Grid.Row="1"
+                    BorderThickness="1" Height="430" Width="200"
+                    Margin="5">                 
+                        
+                        <DockPanel Grid.Row="1">
+                        
+                        <Button DockPanel.Dock="Bottom" FontSize="20"
+                                Content="Delete Meter"
+                                Height="35"
+                                Margin="5"
+                                Command="{Binding DeleteMeterCommand}"/>
 
+                        <Button DockPanel.Dock="Bottom" FontSize="20"
+                                Content="Add Meter"
+                                Height="35"
+                                Margin="5"
+                                Command="{Binding AddMeterCommand}"/>
+
+
+
+                        <ListBox ItemsSource="{Binding Meters}"
+                                 SelectedItem="{Binding SelectedMeter}">
+
+                            <ListBox.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <TextBlock Text="{Binding MeterName}"
+                                               FontSize="20"/>
+
+                                </DataTemplate>
+
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+
+                    </DockPanel>
+                 
+                </Border>
+                </Grid>
+                </TabItem>
+
+            <!-- Comm Config Tab-->
+            <TabItem Header="Comm Params" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Content="Back to Main Menu" Command="{Binding MenuCommand}"/>
+                    <Border Grid.Row="1" Height="450" Width="250"  Margin="5"  BorderBrush="Black"  BorderThickness="2"  Padding="5">
+                        <StackPanel>
+
+                            <TextBlock Text="Meter Name" Margin="0,10,0,0" FontSize="20" Foreground="Black"/>
+                            <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0" FontSize="20"/>
+
+                            <TextBlock Margin="0,30,0,0" Text="COM Port" FontSize="20" Foreground="Black"/>
+
+                            <TextBox Text="{Binding SelectedMeter.Communication.ComPort}" Margin="0,10,0,0" FontSize="20"/>
+
+                            <TextBlock Margin="0,30,0,0" Text="Baud Rate" FontSize="20" Foreground="Black"/>
+
+                            <TextBox Text="{Binding SelectedMeter.Communication.BaudRate}" Margin="0,10,0,0" FontSize="20"/>
+
+                            <TextBlock Margin="0,30,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
+
+                            <TextBox Text="{Binding SelectedMeter.Communication.SlaveId}"  Margin="0,10,0,0" FontSize="20"/>
+
+                            <Button Margin="0,20,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
+
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+            
+            <!-- Regiseters Mapping-->
+            <TabItem Header="Register Mapping" Height="44" VerticalAlignment="Bottom">
+
+                <Grid Margin="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Toolbar -->
+
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox ItemsSource="{Binding }"
+
+                        <Button Content="Add"
+                                Width="90"
+                                Margin="5"
+                                Command="{Binding AddRegisterCommand}"/>
+
+                        <Button Content="Edit"
+                                Width="90"
+                                Margin="5"
+                                Command="{Binding EditRegisterCommand}"/>
+
+                        <Button Content="Delete"
+                                Width="90"
+                                Margin="5"
+                                Command="{Binding DeleteRegisterCommand}"/>
+
+                        <Button Content="Save"
+                                Width="90"
+                                Margin="5"
+                                Command="{Binding SaveRegisterCommand}"/>
+
+                        <Button Content="Load Default"
+                                Width="150"
+                                Margin="5"/>
+                        <Button Content="Main Menu"
+                                Width="150"
+                                Margin="5" Command="{Binding MenuCommand}"/>
+
+                    </StackPanel>
+
+                    <!-- Register Grid -->
+
+                    <DataGrid Grid.Row="1"
+                              Margin="0,10,0,0"
+
+                              ItemsSource="{Binding SelectedMeter.Registers}"
+
+                              SelectedItem="{Binding SelectedRegister}"
+
+                              AutoGenerateColumns="False"
+
+                              CanUserAddRows="False"
+
+                              HeadersVisibility="Column"
+
+                              RowHeight="32"
+
+                              FontSize="16">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Parameter Name"
+                                    Width="250"
+                                    Binding="{Binding ParameterName}"/>
+
+                            <DataGridTextColumn Header="Register"
+                                    Width="120"
+                                    Binding="{Binding RegisterAddress}"/>
+
+                            <DataGridComboBoxColumn Header="Data Type"
+                                        Width="130"
+                                        SelectedItemBinding="{Binding DataType}"
+                                        ItemsSource="{Binding DataContext.DataTypes,
+                                        RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                            <DataGridTextColumn Header="Unit"
+                                                Width="70"
+                                                Binding="{Binding Unit}"/>
+
+                            <DataGridTextColumn Header="Scale"
+                                                Width="90"
+                                                Binding="{Binding ScaleFactor}"/>
+
+                            <DataGridTextColumn Header="Length"
+                                                Width="80"
+                                                Binding="{Binding Length}"/>
+
+                            <DataGridCheckBoxColumn Header="Enabled"
+                                                    Width="80"
+                                                    Binding="{Binding IsEnabled}"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
+
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </UserControl>

@@ -19,12 +19,23 @@ namespace IECGUI.ViewModel
         private readonly INavigationService _navigation;
 
         private MetersConfig _selectedMeter;
-
+        
         public MetersConfig SelectedMeter
         {
             get => _selectedMeter;
             set => SetProperty(ref _selectedMeter, value);
+
         }
+
+        private RegisterConfig _selectedRegister;
+
+        public RegisterConfig SelectedRegister
+        {
+            get => _selectedRegister;
+            set => SetProperty(ref _selectedRegister, value);
+        }
+
+        public ObservableCollection<RegisterConfig> Registers => SelectedMeter?.Registers;
 
         public ObservableCollection<MetersConfig> Meters { get; }
 
@@ -33,6 +44,15 @@ namespace IECGUI.ViewModel
         public ICommand AddMeterCommand { get; }
         public ICommand DeleteMeterCommand { get; }
         public ICommand SaveCommand { get; }
+
+        public ICommand AddRegisterCommand { get; }
+        public ICommand DeleteRegisterCommand { get; }
+
+        public ICommand EditRegisterCommand { get; }
+
+        public ICommand SaveRegisterCommand { get; }
+
+        public ObservableCollection<string> DataTypes { get; } = new() { "Float", "Int16", "UInt16", "Int32", "UInt32", "Double" };
 
         public ConfigurationViewModel(INavigationService navigation, ConfigurationManagerService config)
         {
@@ -50,13 +70,21 @@ namespace IECGUI.ViewModel
             SaveCommand =
                 new RelayCommand(Save);
 
+
+            //Register mapping Tab commands->
+
+            AddRegisterCommand = new RelayCommand(AddRegister);
+
+            DeleteRegisterCommand = new RelayCommand(DeleteRegister);
+                  
+
             MenuCommand = new RelayCommand(() => _navigation.NavigateTo<HomePageViewModel>());
         }
 
 
 
 
-
+        // Add Communincation Confiuration//
         private void AddMeter()
         {
             var meter = new MetersConfig()
@@ -93,7 +121,36 @@ namespace IECGUI.ViewModel
             _config.Save();
         }
 
+        //Add Register Mapping//
 
+        private void AddRegister()
+        {
+            if (SelectedMeter == null)
+                return;
+
+            var reg = new RegisterConfig()
+            {
+                ParameterName = "Voltage A-N",
+                RegisterAddress = 40001,
+                DataType = "Float",
+                Unit = "V",
+                ScaleFactor = 1,
+                Length = 2,
+                IsEnabled = true
+            };
+
+            SelectedMeter.Registers.Add(reg);
+
+            SelectedRegister = reg;
+        }
+
+        private void DeleteRegister()
+        {
+            if (SelectedRegister == null)
+                return;
+
+            SelectedMeter.Registers.Remove(SelectedRegister);
+        }
 
 
 
