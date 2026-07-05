@@ -15,7 +15,7 @@ namespace example3
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "192.168.100.10";
+                hostname = "172.168.1.2";
 
             Console.WriteLine("Connect to " + hostname);
 

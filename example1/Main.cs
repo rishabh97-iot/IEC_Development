@@ -17,7 +17,7 @@ namespace example1
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "192.168.100.10";
+                hostname = "172.168.1.2";
 
 			int port = 102;
 

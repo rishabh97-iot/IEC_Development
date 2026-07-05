@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <AssemblyTitle>server_goose_publisher</AssemblyTitle>
     <Product>server_goose_publisher</Product>
-    <Copyright>Copyright ©  2021</Copyright>
+    <Copyright>Copyright �  2021</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
 	  <Deterministic>false</Deterministic>
@@ -19,7 +19,6 @@
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
-    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IEC61850forCSharp\IEC61850.NET.csproj" />
