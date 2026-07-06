@@ -24,7 +24,6 @@ namespace IECGUI.ViewModel
         {
             get => _selectedMeter;
             set => SetProperty(ref _selectedMeter, value);
-
         }
 
         private RegisterConfig _selectedRegister;
@@ -52,7 +51,24 @@ namespace IECGUI.ViewModel
 
         public ICommand SaveRegisterCommand { get; }
 
-        public ObservableCollection<string> DataTypes { get; } = new() { "Float", "Int16", "UInt16", "Int32", "UInt32", "Double" };
+        // DataTypes changed to enum collection
+        public ObservableCollection<RegisterDataType> DataTypes { get; } =
+            new ObservableCollection<RegisterDataType>(
+                Enum.GetValues(typeof(RegisterDataType)).Cast<RegisterDataType>());
+
+        // New: available COM ports and refresh command
+        public ObservableCollection<string> AvailableComPorts { get; } = new();
+        public ICommand RefreshComPortsCommand { get; }
+
+        // New: Baud rate choices (common values)
+        public ObservableCollection<int> BaudRates { get; } = new()
+        {
+            1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
+        };
+
+        // New: Slave ID choices (1..255)
+        public ObservableCollection<byte> SlaveIds { get; } = new ObservableCollection<byte>(
+            Enumerable.Range(1, 255).Select(i => (byte)i));
 
         public ConfigurationViewModel(INavigationService navigation, ConfigurationManagerService config)
         {
@@ -70,6 +86,10 @@ namespace IECGUI.ViewModel
             SaveCommand =
                 new RelayCommand(Save);
 
+            RefreshComPortsCommand = new RelayCommand(RefreshComPorts);
+
+            // populate available ports at startup
+            RefreshComPorts();
 
             //Register mapping Tab commands->
 
@@ -81,20 +101,34 @@ namespace IECGUI.ViewModel
             MenuCommand = new RelayCommand(() => _navigation.NavigateTo<HomePageViewModel>());
         }
 
+        private void RefreshComPorts()
+        {
+            try
+            {
+                var ports = SerialPort.GetPortNames()
+                    .OrderBy(p => p, StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
 
-
+                AvailableComPorts.Clear();
+                foreach (var p in ports)
+                    AvailableComPorts.Add(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"RefreshComPorts error: {ex.Message}");
+            }
+        }
 
         // Add Communincation Confiuration//
         private void AddMeter()
         {
+            var defaultPort = AvailableComPorts.FirstOrDefault() ?? "COM1";
+
             var meter = new MetersConfig()
             {
                 MeterId = Meters.Count + 1,
                 MeterName = $"Meter-{Meters.Count + 1}",
-                Communication = new CommunicationConfig() { ComPort = "COM6", BaudRate = 19200, DataBits = 8, Parity = "Even", SlaveId = 10, StopBits = 1 }
-
-
-
+                Communication = new CommunicationConfig() { ComPort = defaultPort, BaudRate = 19200, DataBits = 8, Parity = "Even", SlaveId = 10, StopBits = 1 }
             };
 
             Meters.Add(meter);
@@ -131,8 +165,8 @@ namespace IECGUI.ViewModel
             var reg = new RegisterConfig()
             {
                 ParameterName = "Voltage A-N",
-                RegisterAddress = 40001,
-                DataType = "Float",
+                RegisterAddress = 3020,
+                DataType = RegisterDataType.Float, // use enum
                 Unit = "V",
                 ScaleFactor = 1,
                 Length = 2,
@@ -151,10 +185,5 @@ namespace IECGUI.ViewModel
 
             SelectedMeter.Registers.Remove(SelectedRegister);
         }
-
-
-
-
-
     }
 }

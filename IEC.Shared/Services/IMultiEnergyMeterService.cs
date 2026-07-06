@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IEC.Shared.Models;
 
 namespace IEC.Shared.Services
 {
     public interface IMultiEnergyMeterService : IDisposable
     {
-        void Configure(IEnumerable<MeterConfig> meters);
-        Task<Dictionary<string, EnergyMeterReading>> ReadAllAsync();
-        Task<EnergyMeterReading> ReadOneAsync(string meterName);
+        void Configure(IEnumerable<MetersConfig> meters);
+
+        // Now returns a meter-centric, parameter-keyed reading object.
+        Task<Dictionary<string, MeterReading>> ReadAllAsync();
+
+        Task<MeterReading> ReadOneAsync(string meterName);
+
         void DisconnectAll();
     }
 }

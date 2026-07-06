@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace IEC.Shared.Models
 
         public int Length { get; set; } = 2;
 
-        public string DataType { get; set; } = "Float";
+        // Changed from string to enum for stronger typing and easier binding
+        public RegisterDataType DataType { get; set; } = RegisterDataType.Float;
     }
 }

@@ -83,23 +83,26 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="*"/>
-
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Content="Back to Main Menu" Command="{Binding MenuCommand}"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="Gray"  Grid.Row="1" Grid.Column="0"
+                                BorderThickness="1" Height="450" Width="250"
+                                Margin="5" HorizontalAlignment="Right">
 
-                    <Border BorderBrush="Gray"  Grid.Row="1"
-                    BorderThickness="1" Height="430" Width="200"
-                    Margin="5">                 
-                        
-                        <DockPanel Grid.Row="1">
-                        
-                        <Button DockPanel.Dock="Bottom" FontSize="20"
+                            <DockPanel Grid.Row="1">
+
+                                <Button DockPanel.Dock="Bottom" FontSize="20"
                                 Content="Delete Meter"
                                 Height="35"
                                 Margin="5"
                                 Command="{Binding DeleteMeterCommand}"/>
 
-                        <Button DockPanel.Dock="Bottom" FontSize="20"
+                                <Button DockPanel.Dock="Bottom" FontSize="20"
                                 Content="Add Meter"
                                 Height="35"
                                 Margin="5"
@@ -107,29 +110,67 @@
 
 
 
-                        <ListBox ItemsSource="{Binding Meters}"
+                                <ListBox ItemsSource="{Binding Meters}"
                                  SelectedItem="{Binding SelectedMeter}">
 
-                            <ListBox.ItemTemplate>
+                                    <ListBox.ItemTemplate>
 
-                                <DataTemplate>
+                                        <DataTemplate>
 
-                                    <TextBlock Text="{Binding MeterName}"
+                                            <TextBlock Text="{Binding MeterName}"
                                                FontSize="20"/>
 
-                                </DataTemplate>
+                                        </DataTemplate>
 
-                            </ListBox.ItemTemplate>
+                                    </ListBox.ItemTemplate>
 
-                        </ListBox>
+                                </ListBox>
 
-                    </DockPanel>
-                 
-                </Border>
+                            </DockPanel>
+
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="1" Height="450" Width="250" HorizontalAlignment="Left" Margin="5"  BorderBrush="Black"  BorderThickness="2"  Padding="5">
+                            <StackPanel>
+
+                                <TextBlock Text="Meter Name" Margin="0,10,0,0" FontSize="20" Foreground="Black"/>
+                                <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0" FontSize="20"/>
+
+                                <TextBlock Margin="0,30,0,0" Text="COM Port" FontSize="20" Foreground="Black"/>
+
+                                <!-- Changed: COM port selection via ComboBox bound to available ports -->
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <ComboBox Width="200" Height="35"
+                                            IsEditable="True"
+                                            ItemsSource="{Binding AvailableComPorts}"
+                                            SelectedItem="{Binding SelectedMeter.Communication.ComPort, Mode=TwoWay}"
+                                            FontSize="20"/>
+                                    <Button Content="🔄" Margin="1,0,0,0" Padding="0,0"
+                                            Command="{Binding RefreshComPortsCommand}" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Margin="0,10,0,0" Text="Baud Rate" FontSize="20" Foreground="Black"/>
+
+                                <!-- In the meter details panel, change Baud Rate and Slave ID textboxes to ComboBoxes -->
+                                <ComboBox ItemsSource="{Binding DataContext.BaudRates, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          SelectedItem="{Binding SelectedMeter.Communication.BaudRate, Mode=TwoWay}"
+                                          Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
+
+                                <TextBlock Margin="0,10,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
+
+                                <ComboBox ItemsSource="{Binding DataContext.SlaveIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          SelectedItem="{Binding SelectedMeter.Communication.SlaveId, Mode=TwoWay}"
+                                          Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
+
+                                <Button Margin="0,20,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
+
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </Grid>
                 </TabItem>
 
-            <!-- Comm Config Tab-->
+            <!-- Comm Config Tab--><!--
             <TabItem Header="Comm Params" >
                 <Grid>
                     <Grid.RowDefinitions>
@@ -138,30 +179,9 @@
 
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Content="Back to Main Menu" Command="{Binding MenuCommand}"/>
-                    <Border Grid.Row="1" Height="450" Width="250"  Margin="5"  BorderBrush="Black"  BorderThickness="2"  Padding="5">
-                        <StackPanel>
-
-                            <TextBlock Text="Meter Name" Margin="0,10,0,0" FontSize="20" Foreground="Black"/>
-                            <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0" FontSize="20"/>
-
-                            <TextBlock Margin="0,30,0,0" Text="COM Port" FontSize="20" Foreground="Black"/>
-
-                            <TextBox Text="{Binding SelectedMeter.Communication.ComPort}" Margin="0,10,0,0" FontSize="20"/>
-
-                            <TextBlock Margin="0,30,0,0" Text="Baud Rate" FontSize="20" Foreground="Black"/>
-
-                            <TextBox Text="{Binding SelectedMeter.Communication.BaudRate}" Margin="0,10,0,0" FontSize="20"/>
-
-                            <TextBlock Margin="0,30,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
-
-                            <TextBox Text="{Binding SelectedMeter.Communication.SlaveId}"  Margin="0,10,0,0" FontSize="20"/>
-
-                            <Button Margin="0,20,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
-
-                        </StackPanel>
-                    </Border>
+                   
                 </Grid>
-            </TabItem>
+            </TabItem>-->
             
             <!-- Regiseters Mapping-->
             <TabItem Header="Register Mapping" Height="44" VerticalAlignment="Bottom">
@@ -176,7 +196,9 @@
                     <!-- Toolbar -->
 
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox ItemsSource="{Binding }"
+                        <ComboBox ItemsSource="{Binding Meters}" DisplayMemberPath="MeterName"
+                                 SelectedItem="{Binding SelectedMeter, Mode=TwoWay}" Width="Auto"
+                                  Margin="5"/>
 
                         <Button Content="Add"
                                 Width="90"
@@ -236,11 +258,11 @@
                                     Width="120"
                                     Binding="{Binding RegisterAddress}"/>
 
+                            <!-- DataGridComboBoxColumn: ItemsSource already bound to DataGrid.DataContext.DataTypes -->
                             <DataGridComboBoxColumn Header="Data Type"
-                                        Width="130"
-                                        SelectedItemBinding="{Binding DataType}"
-                                        ItemsSource="{Binding DataContext.DataTypes,
-                                        RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                                    Width="130"
+                                                    SelectedItemBinding="{Binding DataType, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding DataContext.DataTypes, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
                             <DataGridTextColumn Header="Unit"
                                                 Width="70"
