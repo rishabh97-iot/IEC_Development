@@ -17,5 +17,7 @@ namespace IEC.Shared.Services
         Task<MeterReading> ReadOneAsync(string meterName);
 
         Task DisconnectAll();
+
+        bool HasMeter(string meterName);
     }
 }

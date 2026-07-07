@@ -23,7 +23,7 @@ namespace IECGUI.ViewModel
         public ICommand Disconnect { get; set; }
 
         private readonly SafePoller _liveDataTimer;
-        private readonly IEnergyMeterService _energyMeterService;
+
         private readonly IMultiEnergyMeterService _multiEnergyMeterService;
 
         private readonly ConfigurationManagerService _config;
@@ -38,14 +38,14 @@ namespace IECGUI.ViewModel
 
         private CancellationTokenSource _cts;
 
-        public EnergyMonitorViewModel(INavigationService navigation, ConfigurationManagerService config, IEnergyMeterService energyMeterService, IMultiEnergyMeterService multiEnergyMeterService)
+        public EnergyMonitorViewModel(INavigationService navigation, ConfigurationManagerService config, IMultiEnergyMeterService multiEnergyMeterService)
         {
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(500), RunBackgroundService, ex => Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
 
             _multiEnergyMeterService = multiEnergyMeterService;
             _navigation = navigation;
-            _energyMeterService = energyMeterService;
+
             _config = config;
 
             // Build UI collection from saved configuration

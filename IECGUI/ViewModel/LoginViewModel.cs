@@ -17,7 +17,7 @@ namespace IECGUI.ViewModel
 
 
         public ICommand LoginCommand { get; }
-        private readonly IEnergyMeterService _energyMeterService;
+ 
         public string Username { get => _username; set => SetProperty(ref _username, value); }
         private string _username;
 
@@ -41,9 +41,9 @@ namespace IECGUI.ViewModel
             set => SetProperty(ref _isUsernameFocused, value);
 
         }
-        public LoginViewModel(INavigationService navigation, IEnergyMeterService energyMeterService)
+        public LoginViewModel(INavigationService navigation)
         { 
-            _energyMeterService = energyMeterService;
+
             _navigation = navigation;
             
             LoginCommand = new RelayCommand(async () => await ExecuteLoginAsync());

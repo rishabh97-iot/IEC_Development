@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace IEC.Shared.Services
 {
-    public class MultiEnergyMeterService : IMultiEnergyMeterService
+    public class MultiEnergyMeterRtuService : IMultiEnergyMeterService
     {
         // One physical port shares one SerialPort + one master, serving multiple slave IDs
         private class PortConnection
@@ -30,6 +30,16 @@ namespace IEC.Shared.Services
         // store full meters configuration (registers + comm) so the service can read based on saved RegisterConfig
         private readonly Dictionary<string, MetersConfig> _meterConfigs = new();
         private readonly object _lock = new();
+
+        // New: check whether this RTU service has configuration for the named meter
+        public bool HasMeter(string meterName)
+        {
+            if (string.IsNullOrWhiteSpace(meterName))
+                return false;
+
+            // check configured map (contains both comm and registers) or runtime map used for port/slave
+            return _meterConfigs.ContainsKey(meterName) || _meters.ContainsKey(meterName);
+        }
 
         // Accept MetersConfig and map communication settings to port + slave id and keep meters config
         public async Task Configure(IEnumerable<MetersConfig> meters)

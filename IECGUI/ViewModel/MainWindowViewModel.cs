@@ -12,15 +12,14 @@ namespace IECGUI.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private readonly IEnergyMeterService _energyMeterService;
+
         public INavigationService Navigation { get; }
 
         public ICommand CloseAppCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
 
-        public MainWindowViewModel(INavigationService navigation, IEnergyMeterService energyMeterService)
+        public MainWindowViewModel(INavigationService navigation)
         {
-            _energyMeterService = energyMeterService;
             Navigation = navigation;
 
             // Forward NavigationService's CurrentView changes to this ViewModel's bindings

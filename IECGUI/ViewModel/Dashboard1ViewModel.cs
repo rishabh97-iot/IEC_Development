@@ -21,7 +21,6 @@ namespace IECGUI.ViewModel
 
         private readonly INavigationService _navigation;
 
-        private readonly IEnergyMeterService _energyMeterService;
         public ICommand EventsCommand { get; }
 
         public ICommand HomeCommand { get; }
@@ -542,12 +541,9 @@ namespace IECGUI.ViewModel
 
 
 
-        public Dashboard1ViewModel(INavigationService navigation , IEnergyMeterService energyMeterService)
+        public Dashboard1ViewModel(INavigationService navigation )
         {
-            if (energyMeterService == null)
-                throw new ArgumentNullException(nameof(energyMeterService), "IEnergyMeterService was not injected — check DI registration.");
 
-            _energyMeterService = energyMeterService;
             _navigation = navigation;
             EventsCommand = new RelayCommand(OpenRelayCard);
             HomeCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel>()); //_navigation.NavigateTo(new Dashboard1ViewModel(_navigation));

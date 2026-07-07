@@ -17,7 +17,7 @@ namespace IECGUI.ViewModel
 {
     public class EnergyMonitorViewModel2 : BaseViewModel
     {
-        private readonly IEnergyMeterService _meterService;
+       
         private readonly DispatcherTimer _pollTimer;
 
         public double VoltageA_N { get => _voltageA_N; set { _voltageA_N = value; OnPropertyChanged(); } }
@@ -110,15 +110,14 @@ namespace IECGUI.ViewModel
         private readonly INavigationService _navigation;
 
         private CancellationTokenSource _cts;
-        public EnergyMonitorViewModel2(INavigationService navigation , IEnergyMeterService meterService)
+        public EnergyMonitorViewModel2(INavigationService navigation )
         {
-            if (meterService == null)
-                throw new ArgumentNullException(nameof(meterService), "IEnergyMeterService was not injected — check DI registration.");
+ 
 
             _navigation = navigation;
             _liveDataTimer = new SafePoller(TimeSpan.FromMilliseconds(1000), PollAsync, ex=>Console.WriteLine(ex.Message));
             _liveDataTimer.Start();
-            _meterService = meterService;
+           
             //_meterService.Connect("COM6", 19200, 10);
             BackCommand = new RelayCommand(NavigateToHome);
 

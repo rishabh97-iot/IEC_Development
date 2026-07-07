@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IECGUI.View"
+             xmlns:conv="clr-namespace:IECGUI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="930" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <conv:ProtocolToVisibilityConverter x:Key="IsTcp" TargetProtocol="ModbusTcp"/>
+        <conv:ProtocolToVisibilityConverter x:Key="IsRtu" TargetProtocol="ModbusRtu"/>
+    </UserControl.Resources>
     <Grid Margin="5" Background="White" Height="930" Width="1920">
+
 
 
 
@@ -133,36 +139,53 @@
                         <Border Grid.Row="1" Grid.Column="1" Height="450" Width="250" HorizontalAlignment="Left" Margin="5"  BorderBrush="Black"  BorderThickness="2"  Padding="5">
                             <StackPanel>
 
-                                <TextBlock Text="Meter Name" Margin="0,10,0,0" FontSize="20" Foreground="Black"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0"> 
+                                    <TextBlock Text="Protocol" VerticalAlignment="Center" FontSize="20" Margin="0,0,8,0" Foreground="Black"/>
+                                    <ComboBox Width="160" Height="35" FontSize="18"
+                                              ItemsSource="{Binding Protocols}"
+                                              SelectedItem="{Binding SelectedMeter.Communication.Protocol, Mode=TwoWay}" />
+                                </StackPanel>
+
+                                <TextBlock Text="Meter Name" Margin="0,5,0,0" FontSize="20" Foreground="Black"/>
                                 <TextBox Text="{Binding SelectedMeter.MeterName}" Margin="0,10,0,0" FontSize="20"/>
+                                <StackPanel Visibility="{Binding SelectedMeter.Communication.Protocol, Converter={StaticResource IsRtu}}">
 
-                                <TextBlock Margin="0,30,0,0" Text="COM Port" FontSize="20" Foreground="Black"/>
+                                    <TextBlock Margin="0,5,0,0" Text="COM Port" FontSize="20" Foreground="Black"/>
 
-                                <!-- Changed: COM port selection via ComboBox bound to available ports -->
-                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                    <ComboBox Width="200" Height="35"
+                                    <!-- Changed: COM port selection via ComboBox bound to available ports -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                        <ComboBox Width="200" Height="35"
                                             IsEditable="True"
                                             ItemsSource="{Binding AvailableComPorts}"
                                             SelectedItem="{Binding SelectedMeter.Communication.ComPort, Mode=TwoWay}"
                                             FontSize="20"/>
-                                    <Button Content="🔄" Margin="1,0,0,0" Padding="0,0"
+                                        <Button Content="🔄" Margin="1,0,0,0" Padding="0,0"
                                             Command="{Binding RefreshComPortsCommand}" VerticalAlignment="Center"/>
-                                </StackPanel>
+                                    </StackPanel>
 
-                                <TextBlock Margin="0,10,0,0" Text="Baud Rate" FontSize="20" Foreground="Black"/>
+                                    <TextBlock Margin="0,10,0,0" Text="Baud Rate" FontSize="20" Foreground="Black"/>
 
-                                <!-- In the meter details panel, change Baud Rate and Slave ID textboxes to ComboBoxes -->
-                                <ComboBox ItemsSource="{Binding DataContext.BaudRates, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    <!-- In the meter details panel, change Baud Rate and Slave ID textboxes to ComboBoxes -->
+                                    <ComboBox ItemsSource="{Binding DataContext.BaudRates, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                           SelectedItem="{Binding SelectedMeter.Communication.BaudRate, Mode=TwoWay}"
                                           Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
 
-                                <TextBlock Margin="0,10,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
+                                    <TextBlock Margin="0,10,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
 
-                                <ComboBox ItemsSource="{Binding DataContext.SlaveIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    <ComboBox ItemsSource="{Binding DataContext.SlaveIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                           SelectedItem="{Binding SelectedMeter.Communication.SlaveId, Mode=TwoWay}"
                                           Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
+                                </StackPanel>
+                                <!-- TCP specific: IP + Port fields -->
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
+                                            Visibility="{Binding SelectedMeter.Communication.Protocol, Converter={StaticResource IsTcp}}">
+                                    <TextBlock Text="IP" FontSize="20" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="Black"/>
+                                    <TextBox Text="{Binding SelectedMeter.Communication.IpAddress, Mode=TwoWay}" Width="120" FontSize="18" />
+                                    <TextBlock Text="Port" FontSize="20" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="Black"/>
+                                    <TextBox Text="{Binding SelectedMeter.Communication.TcpPort, Mode=TwoWay}" Width="60" FontSize="18" />
+                                </StackPanel>
 
-                                <Button Margin="0,20,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
+                                <Button Margin="0,10,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
 
                             </StackPanel>
                         </Border>

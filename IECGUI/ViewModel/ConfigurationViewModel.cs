@@ -51,10 +51,14 @@ namespace IECGUI.ViewModel
 
         public ICommand SaveRegisterCommand { get; }
 
-        // DataTypes changed to enum collection
         public ObservableCollection<RegisterDataType> DataTypes { get; } =
             new ObservableCollection<RegisterDataType>(
                 Enum.GetValues(typeof(RegisterDataType)).Cast<RegisterDataType>());
+
+        // Protocol list for the Protocol ComboBox
+        public ObservableCollection<ProtocolsType> Protocols { get; } =
+            new ObservableCollection<ProtocolsType>(
+                Enum.GetValues(typeof(ProtocolsType)).Cast<ProtocolsType>());
 
         // New: available COM ports and refresh command
         public ObservableCollection<string> AvailableComPorts { get; } = new();
@@ -128,7 +132,18 @@ namespace IECGUI.ViewModel
             {
                 MeterId = Meters.Count + 1,
                 MeterName = $"Meter-{Meters.Count + 1}",
-                Communication = new CommunicationConfig() { ComPort = defaultPort, BaudRate = 19200, DataBits = 8, Parity = "Even", SlaveId = 10, StopBits = 1 }
+                Communication = new CommunicationConfig() 
+                { 
+                    Protocol = ProtocolsType.ModbusRtu,
+                    ComPort = defaultPort, 
+                    BaudRate = 19200, 
+                    DataBits = 8, 
+                    Parity = "Even", 
+                    SlaveId = 10, 
+                    StopBits = 1,
+                    IpAddress = "127.0.0.1",
+                    TcpPort = 502
+                }
             };
 
             Meters.Add(meter);
@@ -164,8 +179,8 @@ namespace IECGUI.ViewModel
 
             var reg = new RegisterConfig()
             {
-                ParameterName = "",
-                RegisterAddress = 3000,
+                ParameterName = "Voltage A-N",
+                RegisterAddress = 3020,
                 DataType = RegisterDataType.Float, // use enum
                 Unit = "V",
                 ScaleFactor = 1,

@@ -23,8 +23,16 @@ namespace IECGUI
             var services = new ServiceCollection();
 
             // Services
-            services.AddSingleton<IEnergyMeterService, EnergyMeterService>();
-            services.AddSingleton<IMultiEnergyMeterService, MultiEnergyMeterService>();
+
+            // example composition root / startup registration
+            services.AddSingleton<MultiEnergyMeterRtuService>();           // RTU concrete
+            services.AddSingleton<MultiEnergyMeterTcpService>();        // TCP concrete
+
+            // Register coordinator as the app-level IMultiEnergyMeterService
+            services.AddSingleton<IMultiEnergyMeterService>(sp =>
+                new MultiEnergyMeterCoordinator(
+                    sp.GetRequiredService<MultiEnergyMeterRtuService>(),
+                    sp.GetRequiredService<MultiEnergyMeterTcpService>()));
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ConfigurationManagerService>();
 
