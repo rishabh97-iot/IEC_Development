@@ -10,6 +10,7 @@ namespace IEC.Shared.Models
     public class MeterViewModel : ObservableObjectVM   // or whatever your base class is
     {
         private string _meterName;
+        private string _meterstatus;
         private float _voltageA_N;
         private float _voltageB_N;
         private float _voltageC_N;
@@ -28,6 +29,12 @@ namespace IEC.Shared.Models
         {
             get => _meterName;
             set => SetProperty(ref _meterName, value);
+        }
+
+        public string MeterStatus
+        {
+            get => _meterstatus;
+            set => SetProperty(ref _meterstatus, value);
         }
 
         public float VoltageA_N

@@ -164,8 +164,8 @@ namespace IECGUI.ViewModel
 
             var reg = new RegisterConfig()
             {
-                ParameterName = "Voltage A-N",
-                RegisterAddress = 3020,
+                ParameterName = "",
+                RegisterAddress = 3000,
                 DataType = RegisterDataType.Float, // use enum
                 Unit = "V",
                 ScaleFactor = 1,

@@ -11,8 +11,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="840"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
@@ -58,7 +58,7 @@
                                 Width="430"
                                 Height="430"
                                 CornerRadius="20"
-                                Background="#B8B8B8"
+                                Background="LightCyan"
                                 BorderBrush="#707070"
                                 BorderThickness="1">
 
@@ -73,11 +73,18 @@
 
                                 <TextBlock Text="{Binding MeterName}"
                                            Grid.Row="0"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"
                                            FontSize="18"
                                            FontWeight="Bold"
-                                           Foreground="Red"/>
+                                           Foreground="Orange"/>
+                                <TextBlock Text="{Binding MeterStatus}"
+                                         Grid.Row="0"
+                                         HorizontalAlignment="Center"
+                                         VerticalAlignment="Top" Foreground="Black" Background="Transparent"
+                                         FontSize="16"
+                                         Width="200"
+                                         Margin="0" />
 
                                 <!--================ BODY =================-->
 

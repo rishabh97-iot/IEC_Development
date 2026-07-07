@@ -32,7 +32,7 @@ namespace IEC.Shared.Services
         private readonly object _lock = new();
 
         // Accept MetersConfig and map communication settings to port + slave id and keep meters config
-        public void Configure(IEnumerable<MetersConfig> meters)
+        public async Task Configure(IEnumerable<MetersConfig> meters)
         {
             if (meters == null)
                 return;
@@ -82,7 +82,7 @@ namespace IEC.Shared.Services
 
                     try
                     {
-                        port.Open();
+                       port.Open();
                     }
                     catch (Exception ex)
                     {
@@ -291,7 +291,7 @@ namespace IEC.Shared.Services
             return bytes;
         }
 
-        public void DisconnectAll()
+        public async Task DisconnectAll()
         {
             foreach (var conn in _portConnections.Values)
                 conn.Port?.Close();

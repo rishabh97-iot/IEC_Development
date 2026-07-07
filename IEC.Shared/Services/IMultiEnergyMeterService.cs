@@ -9,13 +9,13 @@ namespace IEC.Shared.Services
 {
     public interface IMultiEnergyMeterService : IDisposable
     {
-        void Configure(IEnumerable<MetersConfig> meters);
+        Task Configure(IEnumerable<MetersConfig> meters);
 
         // Now returns a meter-centric, parameter-keyed reading object.
         Task<Dictionary<string, MeterReading>> ReadAllAsync();
 
         Task<MeterReading> ReadOneAsync(string meterName);
 
-        void DisconnectAll();
+        Task DisconnectAll();
     }
 }

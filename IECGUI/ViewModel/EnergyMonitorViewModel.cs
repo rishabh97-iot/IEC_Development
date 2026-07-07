@@ -72,22 +72,34 @@ namespace IECGUI.ViewModel
             //{
             //    Console.WriteLine($"Configure multi-meter service failed: {ex.Message}");
             //}
-            Connect = new RelayCommand(ConnectMeters);
-            Disconnect = new RelayCommand(DisconnectMeters);
+            foreach (var vm in Meters)
+            {
+                vm.MeterStatus = "Disconnected";
+            }   
+            Connect = new RelayCommand(async () => await ConnectMeters());
+            Disconnect = new RelayCommand(async () => await DisconnectMeters());
             ReturnToHome = new RelayCommand(NavigateToHome);
         }
 
         // Optional explicit connect method if you want to re-configure/reopen ports at runtime
-        public void ConnectMeters()
+        public async Task ConnectMeters()
         {
             try
             {
-                _multiEnergyMeterService.Configure(_meterConfigMap.Values);
+               await _multiEnergyMeterService.Configure(_meterConfigMap.Values);
+               foreach (var vm in Meters)
+               {
+                   vm.MeterStatus = "Connected";
+               }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"ConnectMeters error: {ex.Message}");
                 MessageBox.Show($"Unable to Connect {ex.Message}");
+                foreach (var vm in Meters)
+                {
+                    vm.MeterStatus = "Disconnected";
+                }
                 return;
             }
         }
@@ -107,6 +119,7 @@ namespace IECGUI.ViewModel
                     if (!readings.TryGetValue(vm.MeterName, out var reading) || reading == null)
                     {
                         Console.WriteLine($"No data for {vm.MeterName}");
+                        vm.MeterStatus = $"No data for {vm.MeterName}";
                         continue;
                     }
 
@@ -218,6 +231,10 @@ namespace IECGUI.ViewModel
             {
                 Console.WriteLine($"MultiMeterRuntime error: {ex.Message}");
                 MessageBox.Show($"Unexpected runtime error: {ex.Message}");
+                foreach (var vm in Meters)
+                {
+                    vm.MeterStatus = $"Unexpected runtime error: {ex.Message}";
+                }
                 return;
             }
         }
@@ -232,16 +249,20 @@ namespace IECGUI.ViewModel
             _navigation.NavigateTo<HomePageViewModel>();
         }
 
-        public void DisconnectMeters()
+        public async Task DisconnectMeters()
         {
             try
             {
-                _multiEnergyMeterService.DisconnectAll();
+               await  _multiEnergyMeterService.DisconnectAll();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"DisconnectMeters error: {ex.Message}");
                 MessageBox.Show($"Unable to Disconnect {ex.Message}");
+                foreach (var vm in Meters)
+                {
+                    vm.MeterStatus = $"Unable to Disconnect {ex.Message}";
+                }
                 return;
             }
         }
