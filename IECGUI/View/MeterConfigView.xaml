@@ -170,11 +170,8 @@
                                           SelectedItem="{Binding SelectedMeter.Communication.BaudRate, Mode=TwoWay}"
                                           Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
 
-                                    <TextBlock Margin="0,10,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
 
-                                    <ComboBox ItemsSource="{Binding DataContext.SlaveIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                          SelectedItem="{Binding SelectedMeter.Communication.SlaveId, Mode=TwoWay}"
-                                          Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
+
                                 </StackPanel>
                                 <!-- TCP specific: IP + Port fields -->
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
@@ -184,6 +181,11 @@
                                     <TextBlock Text="Port" FontSize="20" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="Black"/>
                                     <TextBox Text="{Binding SelectedMeter.Communication.TcpPort, Mode=TwoWay}" Width="60" FontSize="18" />
                                 </StackPanel>
+
+                                <TextBlock Margin="0,10,0,0" Text="Slave ID" FontSize="20" Foreground="Black"/>
+                                <ComboBox ItemsSource="{Binding DataContext.SlaveIds, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          SelectedItem="{Binding SelectedMeter.Communication.SlaveId, Mode=TwoWay}"
+                                          Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" />
 
                                 <Button Margin="0,10,0,0"  Height="40"   Content="Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
 
