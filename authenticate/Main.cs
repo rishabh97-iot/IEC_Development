@@ -17,7 +17,7 @@ namespace authenticate
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "localhost";
+                hostname = "172.168.1.2";
 
             Console.WriteLine("Connect to " + hostname);
 
@@ -25,7 +25,7 @@ namespace authenticate
             {
 				IsoConnectionParameters parameters = con.GetConnectionParameters();
 
-				parameters.UsePasswordAuthentication("top secret");
+				parameters.UsePasswordAuthentication("000000");
 
                 con.Connect(hostname, 102);
 

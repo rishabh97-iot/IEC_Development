@@ -24,7 +24,7 @@ namespace example3
             {
 				IsoConnectionParameters parameters = con.GetConnectionParameters();
 
-				parameters.SetRemoteAddresses(new byte[] { 0x00, 0x01 }, new byte[] {0x00, 0x01}, new byte[] {0x00, 0x01, 0x02, 0x03});
+//				parameters.SetRemoteAddresses(new byte[] { 0x00, 0x01 }, new byte[] {0x00, 0x01}, new byte[] {0x00, 0x01, 0x02, 0x03});
 
 				con.ConnectTimeout = 10000;
 
@@ -35,21 +35,33 @@ namespace example3
 				Console.WriteLine("Negotiated PDU size: " + con.GetMmsConnection().GetLocalDetail());
 
                 List<string> serverDirectory = con.GetServerDirectory(false);
+                while (true) { 
+                    Console.WriteLine("Press any key to read server directory again or 'q' to quit.");
+                    string input = Console.ReadLine();
+                    if (input.ToLower() == "q")
+                        break;
+                
 
-                foreach (string entry in serverDirectory)
-                {
-                    Console.WriteLine("LD: " + entry);
+
+                    foreach (string entry in serverDirectory)
+                    {
+                        Console.WriteLine("LD: " + entry);
+                       
+                    }
                 }
+
 
 				con.Release();
             }
             catch (IedConnectionException e)
             {
-				Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Error code: " + e.GetErrorCode());
+                Console.WriteLine("IedClientError: " + e.GetIedClientError());
             }
 
-			// release all resources - do NOT use the object after this call!!
-			con.Dispose ();
+            // release all resources - do NOT use the object after this call!!
+            con.Dispose ();
         }
     }
 }

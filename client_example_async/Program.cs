@@ -18,7 +18,7 @@ namespace client_example_async
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "127.0.0.1";
+                hostname = "172.168.1.2";
 
             int port = 102;
 

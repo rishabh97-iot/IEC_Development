@@ -24,7 +24,7 @@ namespace control
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "localhost";
+                hostname = "172.168.1.2";
 
             Console.WriteLine("Connect to " + hostname);
 
