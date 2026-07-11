@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IECGUI.View"
+             xmlns:controls ="clr-namespace:IECGUI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="930" d:DesignWidth="1920">
     <UserControl.Resources>
@@ -17,7 +18,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="#1F2554">
+    <Grid Background="CadetBlue">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -41,11 +42,11 @@
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center">
 
-                    <Button Content="Home" Width="100" Command="{Binding HomeCommand}"/>
-                    <Button Content="Alarm" Width="100" Command="{Binding AlarmCommand}"/>
-                    <Button Content="Events" Width="100"  Command="{Binding EventsCommand}"/>
-                    <Button Content="Trending" Width="100" Command="{Binding TrendingCommand}"/>
-                    <Button Content="Reports" Width="100" Command="{Binding ReportsCommand}"/>
+                    <Button Content="Energy Monitor" Width="100" Command="{Binding HomeCommand}"/>
+                    <Button Content="Gauge View" Width="100" Command="{Binding AlarmCommand}"/>
+                    <Button Content="Relay Status" Width="100"  Command="{Binding EventsCommand}"/>
+                    <Button Content="Meter Config" Width="100" Command="{Binding TrendingCommand}"/>
+                    <Button Content="Menu" Width="100" Command="{Binding MenuCommand}"/>
                 </StackPanel>
 
             </DockPanel>
@@ -100,250 +101,166 @@
                 BorderBrush="Gray"
                 BorderThickness="1">
 
-            <Canvas Background="#1F2554">
+            <Canvas Background="Black">
 
                 <!-- Main Bus -->
-                <Line X1="50"
-                      Y1="300"
-                      X2="850"
-                      Y2="300"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+                <Line X1="148" Y1="300" X2="800" Y2="300" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <TextBox Text="13 Panel Board" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="26" FontWeight="Bold" FontStyle="Italic" Canvas.Left="5" Canvas.Top="0"/>
+               
+
+
                 <!-- Main Bus -->
-                <Line X1="950"
-                      Y1="300"
-                      X2="1600"
-                      Y2="300"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-                
+                <Line X1="950" Y1="300" X2="1502" Y2="300" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+
+
                 <!-- Bus Coupler-->
-                <Line X1="850"
-                      Y1="300"
-                      X2="950"
-                      Y2="280"
-                      Stroke="red"
-                      StrokeThickness="3"/>
+                <Line X1="850" Y1="350" X2="900" Y2="330" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen13}"/>
+                <Line X1="850" Y1="350" X2="900" Y2="350" Stroke="OrangeRed" StrokeThickness="3" Visibility="{Binding breakerstatusclose13}"/>
+                <Line X1="798" Y1="350" X2="798" Y2="300" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="798" Y1="350" X2="850" Y2="350" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="950" Y1="350" X2="950" Y2="300" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Line X1="900" Y1="350" X2="950" Y2="350" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Button Command="{Binding BCBRKOPEN}" Width="180" Height="90" Background="Transparent" Canvas.Left="780" Canvas.Top="280" Cursor="Hand" />
+                <TextBox Text="Bus Coupler" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="820" Canvas.Top="250"/>
+
 
                 <!-- Feeder1 -->
-                <Line X1="200"
-                      Y1="100"
-                      X2="200"
-                      Y2="300"
-                      Stroke="Red"
-                      StrokeThickness="3"/>
-                <!-- Feeder2 -->
-                <Line X1="400"
-                     Y1="100"
-                     X2="400"
-                     Y2="300"
-                     Stroke="Red"
-                     StrokeThickness="3"/>
-                <!-- Incommer 1 -->
-                <Line X1="150"
-                      Y1="300"
-                      X2="150"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+
+                <Line X1="180" Y1="200" X2="200" Y2="250" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen10}"/>
+                <Line X1="200" Y1="200" X2="200" Y2="250" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose10}"/>
+                <Line X1="200" Y1="100" X2="200" Y2="200" Stroke="{Binding Feeder1LineColor}" StrokeThickness="5"/>
+                <Line X1="200" Y1="250" X2="200" Y2="300" Stroke="{Binding Feeder1LineColor}" StrokeThickness="5"/>                
+                <Button  Command="{Binding INCBRK1OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="170" Canvas.Top="195" />
+                <TextBox Text="Incommer-1 UPPCL" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="120" Canvas.Top="70"/>
                 
-                <!-- Incommer 2 -->
-                <Line X1="300"
-                      Y1="300"
-                      X2="300"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="191" Canvas.Top="110" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down" Visibility="{Binding Feeder1arrowVisible}"/>
+                <controls:SevenSegMeter Canvas.Top="150" Canvas.Left="90" Width="60" Height="60"/> 
 
-                <!-- Incommer 3 -->
-                <Line X1="450"
-                      Y1="300"
-                      X2="450"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-                <!-- Incommer 4 -->
-                <Line X1="600"
-                      Y1="300"
-                      X2="600"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+                <!-- Feeder2 -->
 
-                <!-- Incommer 5 -->
-                <Line X1="750"
-                      Y1="300"
-                      X2="750"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+                <Line X1="380" Y1="200" X2="400" Y2="250" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen11}"/>
+                <Line X1="400" Y1="200" X2="400" Y2="250" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose11}"/>
+                <Line X1="400" Y1="100" X2="400" Y2="200" Stroke="{Binding Feeder2LineColor}" StrokeThickness="5"/>
+                <Line X1="400" Y1="250" X2="400" Y2="300" Stroke="{Binding Feeder2LineColor}" StrokeThickness="5"/>
+                <Button Command="{Binding INCBRK2OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="370" Canvas.Top="195" />
+                <controls:TriangleIndicator Canvas.Left="391" Canvas.Top="110" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <TextBox Text="Incommer-2 DG Panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="320" Canvas.Top="70"/>
+                <controls:SevenSegMeter Canvas.Top="150" Canvas.Left="300" Width="60" Height="60"/>
 
-                <!-- Incommer 6 -->
-                <Line X1="1050"
-                      Y1="300"
-                      X2="1050"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
+                <!-- Feeder3 -->
 
-                <!-- Incommer 7 -->
-                <Line X1="1200"
-                      Y1="300"
-                      X2="1200"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-
-                <!-- Incommer 8 -->
-                <Line X1="1350"
-                      Y1="300"
-                      X2="1350"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-
-                <!-- Incommer 9 -->
-                <Line X1="1500"
-                      Y1="300"
-                      X2="1500"
-                      Y2="400"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-             
-
-                <!-- Incommer Breaker 1 -->
-                    <Button Command="{Binding INCBRK1OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="120" Canvas.Top="400" />
-                    <Line X1="130" Y1="400" X2="150" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen1}"/>                 
-
-                    <!-- Incommer Breaker 2 -->
-                 <Button Command="{Binding INCBRK2OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="270" Canvas.Top="400" />
-                    <Line X1="280" Y1="400" X2="300" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen2}"/>
-                <!-- Incommer Breaker 3 -->
-                    <Button Command="{Binding INCBRK3OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="420" Canvas.Top="400" />
-                    <Line X1="430" Y1="400" X2="450" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen3}"/>
-                <!-- Incommer Breaker 4 -->
-                    <Button Command="{Binding INCBRK4OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="570" Canvas.Top="400" />
-                    <Line X1="580" Y1="400" X2="600" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen4}"/>
-                <!-- Incommer Breaker 5 -->
-                    <Button Command="{Binding INCBRK5OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="720" Canvas.Top="400" />
-                    <Line X1="730" Y1="400" X2="750" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen5}"/>
-                <!-- Incommer Breaker 6 -->
-                    <Button Command="{Binding INCBRK6OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1020" Canvas.Top="400" />
-                    <Line X1="1030" Y1="400" X2="1050" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen6}"/>
-                <!-- Incommer Breaker 7 -->
-                    <Button Command="{Binding INCBRK7OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1170" Canvas.Top="400" />
-                    <Line X1="1180" Y1="400" X2="1200" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen7}"/>
-                <!-- Incommer Breaker 8 -->
-                    <Button Command="{Binding INCBRK8OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1320" Canvas.Top="400" />
-                    <Line X1="1330" Y1="400" X2="1350" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen8}"/>
-                <!-- Incommer Breaker 9 -->
-                    <Button Command="{Binding INCBRK9OPEN}" Width="60" Height="60" Background="Black" Canvas.Left="1470" Canvas.Top="400" />
-                    <Line X1="1480" Y1="400" X2="1500" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen9}"/>
-
-             
-
-                <!-- Incommer 1 drop -->
-                <Line X1="150"
-                      Y1="450"
-                      X2="150"
-                      Y2="550"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-                <!-- Incommer 2 drop -->
-                <Line X1="300"
-                      Y1="450"
-                      X2="300"
-                      Y2="550"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-                <!-- Incommer 3 drop -->
-                <Line X1="450"
-                      Y1="450"
-                      X2="450"
-                      Y2="550"
-                      Stroke="Red"
-                      StrokeThickness="5"/>
-                <!-- Incommer 4 drop -->
-                <Line X1="600"
-                     Y1="450"
-                     X2="600"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>
-                <!-- Incommer 5 drop -->
-                <Line X1="750"
-                     Y1="450"
-                     X2="750"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>                
-                <!-- Incommer 6 drop -->
-                <Line X1="1050"
-                     Y1="450"
-                     X2="1050"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>
-                <!-- Incommer 7 drop -->
-                <Line X1="1200"
-                     Y1="450"
-                     X2="1200"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>
-                <!-- Incommer 8 drop -->
-                <Line X1="1350"
-                     Y1="450"
-                     X2="1350"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>                
-                <!-- Incommer 9 drop -->
-                <Line X1="1500"
-                     Y1="450"
-                     X2="1500"
-                     Y2="550"
-                     Stroke="Red"
-                     StrokeThickness="5"/>
-
-                <Canvas Visibility="{Binding breakerstatusclose}">
-                    <!-- Incommer Breaker 1 -->
-                    <Line X1="150" Y1="400" X2="150" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose1}"/>
-
-                    <!-- Incommer Breaker 2 -->
-                    <Line X1="300" Y1="400" X2="300" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose2}"/>
-
-                    <!-- Incommer Breaker 3 -->
-                    <Line X1="450" Y1="400" X2="450" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose3}"/>
-
-                    <!-- Incommer Breaker 4 -->
-                    <Line X1="600" Y1="400" X2="600" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose4}"/>
-
-                    <!-- Incommer Breaker 5 -->
-                    <Line X1="750" Y1="400" X2="750" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose5}"/>
-
-                    <!-- Incommer Breaker 6 -->
-                    <Line X1="1050" Y1="400" X2="1050" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose6}"/>
-
-                    <!-- Incommer Breaker 7 -->
-                    <Line X1="1200" Y1="400" X2="1200" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose7}"/>
-
-                    <!-- Incommer Breaker 8 -->
-                    <Line X1="1350" Y1="400" X2="1350" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose8}"/>
-
-                    <!-- Incommer Breaker 9 -->
-                    <Line X1="1500" Y1="400" X2="1500" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose9}"/>
-
-                </Canvas>
-
-                <!-- Breaker -->
-                <Ellipse Width="20"
-                         Height="20"
-                         Fill="LimeGreen"
-                         Canvas.Left="190"
-                         Canvas.Top="180"/>
+                <Line X1="1130" Y1="200" X2="1150" Y2="250" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen12}"/>
+                <Line X1="1150" Y1="200" X2="1150" Y2="250" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose12}"/>
+                <Line X1="1150" Y1="100" X2="1150" Y2="200" Stroke="{Binding Feeder3LineColor}" StrokeThickness="5"/>
+                <Line X1="1150" Y1="250" X2="1150" Y2="300" Stroke="{Binding Feeder3LineColor}" StrokeThickness="5"/>
+                <Button Command="{Binding INCBRK3OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1115" Canvas.Top="195" />
+                <controls:TriangleIndicator Canvas.Left="1141" Canvas.Top="110" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <TextBox Text="Incommer-3 UPPCL" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1070" Canvas.Top="70"/>
+                <controls:SevenSegMeter Canvas.Top="150" Canvas.Left="1200" Width="60" Height="60"/>
 
 
+                <!-- Feeder4 -->
+
+                <Line X1="1380" Y1="200" X2="1400" Y2="250" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen14}"/>
+                <Line X1="1400" Y1="200" X2="1400" Y2="250" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose14}"/>
+                <Line X1="1400" Y1="100" X2="1400" Y2="200" Stroke="{Binding Feeder4LineColor}" StrokeThickness="5"/>
+                <Line X1="1400" Y1="250" X2="1400" Y2="300" Stroke="{Binding Feeder4LineColor}" StrokeThickness="5"/>
+                <Button Command="{Binding INCBRK4OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1365" Canvas.Top="195" />
+                <controls:TriangleIndicator Canvas.Left="1391" Canvas.Top="110" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <TextBox Text="Incommer-4 DG Panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1320" Canvas.Top="70"/>
+                <controls:SevenSegMeter Canvas.Top="150" Canvas.Left="1450" Width="60" Height="60"/>
+
+                <!-- OUTommer 1 set -->
+                <Line X1="150" Y1="300" X2="150" Y2="400" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="150" Y1="450" X2="150" Y2="550" Stroke="{Binding Feeder7LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="141" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="130" Y1="400" X2="150" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen1}"/>
+                <Line X1="150" Y1="400" X2="150" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose1}"/>
+                <Button Command="{Binding OUTBRK1OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="120" Canvas.Top="400" />
+                <TextBox Text="Outgoing-1" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="110" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="141" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+
+                <!-- OUTommer 2 set -->
+                <Line X1="300" Y1="300" X2="300" Y2="400" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="300" Y1="450" X2="300" Y2="550" Stroke="{Binding Feeder8LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="291" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>                
+                <Line X1="280" Y1="400" X2="300" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen2}"/>
+                <Line X1="300" Y1="400" X2="300" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose2}"/>
+                <Button Command="{Binding OUTBRK2OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="270" Canvas.Top="400" />
+                <TextBox Text="Outgoing-2" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="250" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="291" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+                <!-- OUTommer 3 set -->
+                <Line X1="450" Y1="300" X2="450" Y2="400" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="450" Y1="450" X2="450" Y2="550" Stroke="{Binding Feeder9LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="441" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>                
+                <Line X1="430" Y1="400" X2="450" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen3}"/>
+                <Line X1="450" Y1="400" X2="450" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose3}"/>
+                <Button Command="{Binding OUTBRK3OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="420" Canvas.Top="400" />
+                <TextBox Text="Outgoing-3" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="400" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="441" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+                <!-- OUTommer 4 set -->
+                <Line X1="600" Y1="300" X2="600" Y2="400" Stroke="{Binding Feeder5LineColor}" StrokeThickness="5"/>
+                <Line X1="600" Y1="450" X2="600" Y2="550" Stroke="{Binding Feeder10LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="591" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="580" Y1="400" X2="600" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen4}"/>
+                <Line X1="600" Y1="400" X2="600" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose4}"/>
+                <Button Command="{Binding OUTBRK4OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="570" Canvas.Top="400" />
+                <TextBox Text="Outgoing-4" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="550" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="591" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+                <!-- OUTommer 5 set --><!--
+                <Line X1="750" Y1="300" X2="750" Y2="400" Stroke="Red" StrokeThickness="5"/>
+                <Line X1="750" Y1="450" X2="750" Y2="550" Stroke="Red" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="741" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="730" Y1="400" X2="750" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen5}"/>
+                <Line X1="750" Y1="400" X2="750" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose5}"/>
+                <Button Command="{Binding OUTBRK5OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="720" Canvas.Top="400" />
+                <TextBox Text="Outgoing-5" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="700" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="741" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>-->
+
+                <!-- OUTommer 6 set-->
+                <Line X1="1050" Y1="300" X2="1050" Y2="400" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Line X1="1050" Y1="450" X2="1050" Y2="550" Stroke="{Binding Feeder12LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="1041" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="1030" Y1="400" X2="1050" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen6}"/>
+                <Line X1="1050" Y1="400" X2="1050" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose6}"/>
+                <Button Command="{Binding OUTBRK6OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1020" Canvas.Top="400" />
+                <TextBox Text="Outgoing-6" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1010" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="1041" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+                <!-- OUTommer 7 set-->
+                <Line X1="1200" Y1="300" X2="1200" Y2="400" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Line X1="1200" Y1="450" X2="1200" Y2="550" Stroke="{Binding Feeder13LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="1191" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="1180" Y1="400" X2="1200" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen7}"/>
+                <Line X1="1200" Y1="400" X2="1200" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose7}"/>
+                <Button Command="{Binding OUTBRK7OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1170" Canvas.Top="400" />
+                <TextBox Text="Outgoing-7" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1150" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="1191" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+
+                <!-- OUTommer 8 set-->
+                <Line X1="1350" Y1="300" X2="1350" Y2="400" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Line X1="1350" Y1="450" X2="1350" Y2="550" Stroke="{Binding Feeder14LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="1341" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="1330" Y1="400" X2="1350" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen8}"/>
+                <Line X1="1350" Y1="400" X2="1350" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose8}"/>
+                <Button Command="{Binding OUTBRK8OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1320" Canvas.Top="400" />
+                <TextBox Text="Outgoing-8" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1300" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="1341" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+
+                <!-- OUTommer 9 set -->
+                <Line X1="1500" Y1="300" X2="1500" Y2="400" Stroke="{Binding Feeder6LineColor}" StrokeThickness="5"/>
+                <Line X1="1500" Y1="450" X2="1500" Y2="550" Stroke="{Binding Feeder15LineColor}" StrokeThickness="5"/>
+                <controls:TriangleIndicator Canvas.Left="1491" Canvas.Top="350" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
+                <Line X1="1480" Y1="400" X2="1500" Y2="450" Stroke="LimeGreen" StrokeThickness="3" Visibility="{Binding breakerstatusopen9}"/>
+                <Line X1="1500" Y1="400" X2="1500" Y2="450" Stroke="Red" StrokeThickness="3" Visibility="{Binding breakerstatusclose9}"/>
+                <Button Command="{Binding OUTBRK9OPEN}" Width="60" Height="60" Background="Transparent" Canvas.Left="1470" Canvas.Top="400" />
+                <TextBox Text="Outgoing-9" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" FontWeight="Bold" Canvas.Left="1460" Canvas.Top="560"/>
+                <controls:TriangleIndicator Canvas.Left="1491" Canvas.Top="550" Width="18" Height="18" Fill="red" Stroke="Red" Direction="Down"/>
             </Canvas>
 
         </Border>

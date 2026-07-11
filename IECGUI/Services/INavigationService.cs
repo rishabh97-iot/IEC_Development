@@ -9,8 +9,8 @@ namespace IECGUI.Services
 {
     public interface INavigationService
     {
-        BaseViewModel CurrentViewModel { get; set; }
-
-        void NavigateTo(BaseViewModel viewModel);
+        object CurrentView { get; }
+        event Action CurrentViewChanged;
+        void NavigateTo<T>() where T : BaseViewModel;
     }
 }

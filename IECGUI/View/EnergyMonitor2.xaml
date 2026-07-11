@@ -155,16 +155,16 @@
 
             </Border>
 
-                <ScrollViewer Grid.Column="1">
+            <ScrollViewer Grid.Column="1">
 
                     <StackPanel Margin="10">
 
                         <!-- CURRENT GAUGES -->
                         <Border BorderBrush="DodgerBlue"
-                                BorderThickness="5"
+                                BorderThickness="0"
                                 CornerRadius="10"
                                 Padding="10"
-                                Width="800"
+                                Width="1650"
                                 HorizontalAlignment="Left"
                                 Margin="0,0,0,20">
 
@@ -202,6 +202,16 @@
                                           MaxValue="500"
                                           Value="{Binding INC3AMP}" />
 
+                                    <Controls:DigitalMeterCard Width="250"
+                                          Height="180" Value="{Binding INC1AMP,StringFormat={}{0:F2}}" 
+                                          CurrentBrush="{Binding Brush1}" Padding="5,5" Margin="100,5,5,5" />
+
+                                    <Controls:DigitalMeterCard Width="250"
+                                          Height="180" Value="{Binding INC2AMP,StringFormat={}{0:F2}}" 
+                                          CurrentBrush="{Binding Brush2}" Padding="5,5" Margin="100,5,5,5"  />
+
+
+
                                 </WrapPanel>
 
                             </StackPanel>
@@ -210,7 +220,7 @@
 
                         <!-- VOLTAGE GAUGES -->
                         <Border BorderBrush="Orange"
-                                BorderThickness="5"
+                                BorderThickness="0"
                                 CornerRadius="10"
                                 Width="800"
                                 HorizontalAlignment="Left"
@@ -250,6 +260,9 @@
                                           MaxValue="50"
                                           Value="{Binding INC3VOLT}" />
 
+
+  
+
                                 </WrapPanel>
 
                             </StackPanel>
@@ -257,6 +270,7 @@
                         </Border>
 
                     </StackPanel>
+                
 
                 </ScrollViewer>
 

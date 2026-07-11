@@ -1,25 +1,39 @@
-﻿using System;
+﻿using IECGUI.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IECGUI.ViewModel;
+using System.Windows.Navigation;
 
 namespace IECGUI.Services
 {
-    public class NavigationService : BaseViewModel, INavigationService 
+    public class NavigationService : INavigationService
     {
-        private BaseViewModel _currentViewModel;
+        private readonly IServiceProvider _serviceProvider;
+        private object _currentView;
 
-        public BaseViewModel CurrentViewModel
+        public object CurrentView
         {
-            get => _currentViewModel;
-            set => SetProperty(ref _currentViewModel, value);
+            get => _currentView;
+            private set
+            {
+                _currentView = value;
+                CurrentViewChanged?.Invoke();
+            }
         }
 
-        public void NavigateTo(BaseViewModel viewModel) 
+        public event Action CurrentViewChanged;
+
+        public NavigationService(IServiceProvider serviceProvider)
         {
-            CurrentViewModel = viewModel;
+            _serviceProvider = serviceProvider;
+        }
+
+        public void NavigateTo<T>() where T : BaseViewModel
+        {
+            CurrentView = _serviceProvider.GetRequiredService<T>();
         }
     }
 }

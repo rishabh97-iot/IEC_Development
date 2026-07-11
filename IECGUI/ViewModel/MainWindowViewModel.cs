@@ -6,58 +6,45 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using IEC.Shared.Services;
 
 namespace IECGUI.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private object _currentView;
 
-        public INavigationService Navigation { get; set; }
+        public INavigationService Navigation { get; }
+
         public ICommand CloseAppCommand { get; set; }
-
         public ICommand LogoutCommand { get; set; }
 
-        private readonly INavigationService _navigation;
-
-        public object CurrentView
+        public MainWindowViewModel(INavigationService navigation)
         {
-            get => _currentView;
-            set
-            {
-                _currentView = value;
-                OnPropertyChanged();
-            }
-        }
+            Navigation = navigation;
 
-        public MainWindowViewModel()
-        {
-            
+            // Forward NavigationService's CurrentView changes to this ViewModel's bindings
+            Navigation.CurrentViewChanged += () => OnPropertyChanged(nameof(Navigation));
+
             CloseAppCommand = new RelayCommand(ExecuteCloseApp);
-
             LogoutCommand = new RelayCommand(ExecuteLogout);
 
-            Navigation = new NavigationService();
-
-            Navigation.NavigateTo(new  LoginViewModel(Navigation));
-            
+            Navigation.NavigateTo<LoginViewModel>();
         }
 
         private void ExecuteCloseApp()
         {
-          if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-          {
-              System.Windows.Application.Current.Shutdown();
-          }
-        }
-
-        private void ExecuteLogout() 
-        {
-            if (MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to exit?", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                Navigation.NavigateTo(new LoginViewModel(Navigation));
+                Application.Current.Shutdown();
             }
         }
 
+        private void ExecuteLogout()
+        {
+            if (MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                Navigation.NavigateTo<LoginViewModel>();
+            }
+        }
     }
 }

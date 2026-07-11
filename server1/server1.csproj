@@ -23,9 +23,6 @@
     <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IEC61850forCSharp\IEC61850.NET.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="model.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

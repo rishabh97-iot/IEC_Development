@@ -1,4 +1,5 @@
-﻿using IECGUI.Services;
+﻿using IEC.Shared.Services;
+using IECGUI.Services;
 using Microsoft.Xaml.Behaviors.Layout;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace IECGUI.ViewModel
 
 
         public ICommand LoginCommand { get; }
-
+ 
         public string Username { get => _username; set => SetProperty(ref _username, value); }
         private string _username;
 
@@ -42,6 +43,7 @@ namespace IECGUI.ViewModel
         }
         public LoginViewModel(INavigationService navigation)
         { 
+
             _navigation = navigation;
             
             LoginCommand = new RelayCommand(async () => await ExecuteLoginAsync());
@@ -64,7 +66,7 @@ namespace IECGUI.ViewModel
                 {
                     // Successful login
                    // MessageBox.Show("Login successful!", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _navigation.NavigateTo(new Dashboard1ViewModel(_navigation));
+                    _navigation.NavigateTo<HomePageViewModel>();
                     //_navigation.NavigateTo(new MainWindowViewModel());
 
 
