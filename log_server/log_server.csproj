@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
@@ -19,7 +19,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <AssemblyTitle>log_server</AssemblyTitle>
     <Product>log_server</Product>
-    <Copyright>Copyright ©  2024</Copyright>
+    <Copyright>Copyright �  2024</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
 	  <Deterministic>false</Deterministic>
@@ -34,7 +34,6 @@
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
     <PackageReference Include="System.Threading.Timer" Version="4.3.0" />
-    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">

@@ -17,7 +17,7 @@ namespace example1
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "192.168.100.10";
+                hostname = "172.168.1.2";
 
 			int port = 102;
 
@@ -45,8 +45,8 @@ namespace example1
                     Console.WriteLine("Dataset: " + entry);
                 }
 
-				string vendor = con.ReadStringValue ("simpleIOGenericIO/LLN0.NamPlt.vendor", FunctionalConstraint.DC);
-                Console.WriteLine ("Vendor: " + vendor);
+			//	string vendor = con.ReadStringValue ("simpleIOGenericIO/LLN0.NamPlt.vendor", FunctionalConstraint.DC);
+             //   Console.WriteLine ("Vendor: " + vendor);
 
                 /* read FCDO */
                 MmsValue value = con.ReadValue("simpleIOGenericIO/GGIO1.AnIn1", FunctionalConstraint.MX);
@@ -85,6 +85,9 @@ namespace example1
             catch (IedConnectionException e)
             {
 				Console.WriteLine(e.Message);
+                Console.WriteLine("Numeric error code: " + e.GetErrorCode());
+                Console.WriteLine("IedClientError: " + e.GetIedClientError());
+
             }
 
             System.Threading.Thread.Sleep(2000);
