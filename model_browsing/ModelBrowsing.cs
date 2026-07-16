@@ -42,7 +42,7 @@ namespace model_browsing
             if (args.Length > 0)
                 hostname = args[0];
             else
-                hostname = "localhost";
+                hostname = "172.168.1.2";
 
             try
             {
@@ -86,7 +86,7 @@ namespace model_browsing
 							foreach (string dataDirectoryElement in dataDirectory) {
 
 								string daReference = logicalNodeReference + "." + dataObject + "." + ObjectReference.getElementName(dataDirectoryElement);
-
+                                Console.WriteLine($" daRefrence -> {daReference}");
 								// get the type specification of a variable
 								MmsVariableSpecification specification = con.GetVariableSpecification(daReference,  ObjectReference.getFC(dataDirectoryElement));
 

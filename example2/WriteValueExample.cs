@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using IEC61850.Client;
 using IEC61850.Common;
+using System.Threading;
 
 namespace example2
 {
@@ -23,14 +24,37 @@ namespace example2
             try
             {
                 con.Connect(hostname, 102);
+                //MmsVariableSpecification specification = con.GetVariableSpecification("IED_1234MEAS/MMXU1.A.phsA", FunctionalConstraint.MX);
 
-				float setMagF = con.ReadFloatValue("ied1Inverter/ZINV1.OutWSet.setMag.f", FunctionalConstraint.SP);
+                //Console.WriteLine(specification);
+                int n = 0;
+                while (n < 50)
+                {
+                    // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.Hz", FunctionalConstraint.MX);
+                   // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
+                    MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
 
-				Console.WriteLine("ied1Inverter/ZINV1.OutWSet.setMag.f: " + setMagF);
+                    //Console.WriteLine(" Value-: "+value.ToString());
+                    MmsValue mag = value.GetElement(0);
 
-				setMagF += 1.0f;
+               // Console.WriteLine("mag type = " + mag.GetType());
+               // Console.WriteLine("mag size = " + mag.Size());
+                MmsValue ef = value.GetElement(0);
+                    // Console.WriteLine(" IED_1234MEAS/MMXU1.PPV : " + ef);
 
-				con.WriteValue("ied1Inverter/ZINV1.OutWSet.setMag.f", FunctionalConstraint.SP, new MmsValue(setMagF));
+                    for (int i = 0; i < mag.Size(); i++)
+                    {
+                        MmsValue e = mag.GetElement(i);
+
+                        Console.WriteLine($"mag[{i}] Type={e.GetType()} Value={e}");
+                    }
+
+                    Thread.Sleep(500);
+                    n++;
+                }
+
+                
+
 
                 con.Abort();
             }
