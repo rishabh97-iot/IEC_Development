@@ -51,6 +51,7 @@ namespace IECGUI
             services.AddTransient<EnergyMonitorViewModel2>();            
             services.AddSingleton<ConfigurationViewModel>();
             services.AddSingleton<HomePageViewModel>();
+            services.AddTransient<Iec61850MonitorViewModel>();
             // Views
             services.AddTransient<MainWindow>();
 

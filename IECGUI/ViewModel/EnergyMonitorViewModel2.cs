@@ -104,6 +104,8 @@ namespace IECGUI.ViewModel
 
         public ICommand BackCommand { get; }
 
+        public ICommand RelayPage { get; }
+
         private readonly SafePoller _liveDataTimer;
 
         public ObservableCollection<MeterViewModel> Meters { get; }
@@ -120,6 +122,7 @@ namespace IECGUI.ViewModel
            
             //_meterService.Connect("COM6", 19200, 10);
             BackCommand = new RelayCommand(NavigateToHome);
+            RelayPage = new RelayCommand(NavigateToRelayPage);
 
             INC1AMP = 0.0;
             INC2AMP = 0.0;
@@ -133,6 +136,11 @@ namespace IECGUI.ViewModel
         private void NavigateToHome()
         {
             _navigation.NavigateTo<Dashboard1ViewModel>();
+        }
+
+        private void NavigateToRelayPage()
+        {
+            _navigation.NavigateTo<Iec61850MonitorViewModel>();
         }
         private async Task PollAsync(Dictionary<int, object> parameters)
         {

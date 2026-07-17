@@ -39,6 +39,10 @@
                 <view:MeterConfigView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type vm:Iec61850MonitorViewModel}">
+                <view:Iec61850MonitorView/>
+            </DataTemplate>
+
 
 
 

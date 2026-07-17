@@ -47,10 +47,10 @@ namespace IEC.Shared.IECServices
                             IsOnline = true,
 
                             // DO[0..3] = TotPF, TotVA, TotVAr, TotW
-                            TotPF = GetDirectValue(mmxu.GetElement(0)),
-                            TotVA = GetDirectValue(mmxu.GetElement(1)),
-                            TotVAr = GetDirectValue(mmxu.GetElement(2)),
-                            TotW = GetDirectValue(mmxu.GetElement(3)),
+                            TotPF = GetDirectValue(mmxu.GetElement(3)),
+                            TotVA = GetDirectValue(mmxu.GetElement(0)),
+                            TotVAr = GetDirectValue(mmxu.GetElement(1)),
+                            TotW = GetDirectValue(mmxu.GetElement(2)),
 
                             // DO[4] = Hz
                             Hz = GetDirectValue(mmxu.GetElement(4)),

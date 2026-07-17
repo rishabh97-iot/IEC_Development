@@ -61,10 +61,10 @@
                         Height="40"
                         Margin="10" Command="{Binding DeleteCommand}"/>
 
-                <Button Content="PAGES"
+                <Button Content="RELAY STATUS"
                         Width="120"
                         Height="40"
-                        Margin="10" Command="{Binding PagesCommand}"/>
+                        Margin="10" Command="{Binding RelayPage}"/>
 
                 <Button Content="EXPORT PDF"
                         Width="120"
