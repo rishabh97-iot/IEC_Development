@@ -1,5 +1,6 @@
+﻿using IEC61850.Client;
+using IEC61850.Common;
 using System;
-using IEC61850.Client;
 using System.Collections.Generic;
 
 namespace example3
@@ -32,26 +33,123 @@ namespace example3
 
                 con.Connect(hostname, 102);
 
-				Console.WriteLine("Negotiated PDU size: " + con.GetMmsConnection().GetLocalDetail());
 
-                List<string> serverDirectory = con.GetServerDirectory(false);
-                while (true) { 
-                    Console.WriteLine("Press any key to read server directory again or 'q' to quit.");
-                    string input = Console.ReadLine();
-                    if (input.ToLower() == "q")
-                        break;
-                
+                //MmsValue mmxu = con.ReadValue("IED_1234MEAS/MMXU1", FunctionalConstraint.MX);
+
+                //Console.WriteLine("=== STRUCTURE DEBUG ===");
+                //for (int i = 0; i < mmxu.Size(); i++)
+                //{
+                //    MmsValue doVal = mmxu.GetElement(i);
+                //    Console.WriteLine($"\nDO[{i}] Type={doVal.GetType()} Size={doVal.Size()}");
+
+                //    for (int j = 0; j < doVal.Size(); j++)
+                //    {
+                //        MmsValue child = doVal.GetElement(j);
+                //        Console.WriteLine($"  [{j}] Type={child.GetType()} Size={(child.GetType() == MmsType.MMS_STRUCTURE ? child.Size().ToString() : "N/A")} Val={child}");
+
+                //        if (child.GetType() == MmsType.MMS_STRUCTURE)
+                //        {
+                //            for (int k = 0; k < child.Size(); k++)
+                //            {
+                //                MmsValue grandchild = child.GetElement(k);
+                //                Console.WriteLine($"    [{k}] Type={grandchild.GetType()} Val={grandchild}");
+
+                //                if (grandchild.GetType() == MmsType.MMS_STRUCTURE)
+                //                {
+                //                    for (int m = 0; m < grandchild.Size(); m++)
+                //                    {
+                //                        MmsValue ggchild = grandchild.GetElement(m);
+                //                        Console.WriteLine($"      [{m}] Type={ggchild.GetType()} Val={ggchild}");
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
 
 
-                    foreach (string entry in serverDirectory)
+
+                MmsValue mmxu = con.ReadValue("IED_1234MEAS/MMXU1", FunctionalConstraint.MX);
+
+                // ---- Helper: Direct DO se mag value nikalna ----
+                // Structure: { instMag{f}, mag{f}, q, t }
+                //                  [0]      [1]
+                // Hum [1] (mag) lete hain → [0] → [0] = float
+                float GetDirectValue(MmsValue doVal)
+                {
+                    return (float)doVal.GetElement(1)   // mag
+                                       .GetElement(0)   // {f}                                       
+                                       .ToDouble();
+                }
+
+                // ---- Helper: Phase child se mag value nikalna ----
+                // Structure: { instMag{f}, mag{f}, q, t }
+                //                  [0]      [1]
+                float GetPhaseValue(MmsValue phaseChild)
+                {
+                    return (float)phaseChild.GetElement(1)  // mag
+                                            .GetElement(0)  // {f}
+                                            .GetElement(0)  // f
+                                            .ToDouble();
+                }
+
+                Console.WriteLine($"\n{"Element",-10} {"Child",-10} {"Value",12}");
+                Console.WriteLine(new string('-', 35));
+
+                // DO[0..3] = TotPF, TotVA, TotVAr, TotW (direct)
+                var directDOs = new[] { "TotPF", "TotVA", "TotVAr", "TotW" };
+                for (int i = 0; i <= 3; i++)
+                {
+                    float val = GetDirectValue(mmxu.GetElement(i));
+                    Console.WriteLine($"{directDOs[i],-10} {"",-10} {val,12:F4}");
+                }
+
+                // DO[4] = Hz (direct)
+                {
+                    float val = GetDirectValue(mmxu.GetElement(4));
+                    Console.WriteLine($"{"Hz",-10} {"",-10} {val,12:F4}");
+                }
+
+                // DO[5] = PPV (3 phases: phsAB, phsBC, phsCA)
+                {
+                    Console.WriteLine($"\n{"PPV",-10}");
+                    var phases = new[] { "phsAB", "phsBC", "phsCA" };
+                    MmsValue ppv = mmxu.GetElement(5);
+                    for (int j = 0; j < 3; j++)
                     {
-                        Console.WriteLine("LD: " + entry);
-                       
+                        float val = GetPhaseValue(ppv.GetElement(j));
+                        Console.WriteLine($"  {"",-8} {phases[j],-10} {val,12:F4}");
+                    }
+                }
+
+                // DO[6] = PhV (4 phases: neut, phsA, phsB, phsC)
+                {
+                    Console.WriteLine($"\n{"PhV",-10}");
+                    var phases = new[] { "neut", "phsA", "phsB", "phsC" };
+                    MmsValue phv = mmxu.GetElement(6);
+                    for (int j = 0; j < 4; j++)
+                    {
+                        float val = GetPhaseValue(phv.GetElement(j));
+                        Console.WriteLine($"  {"",-8} {phases[j],-10} {val,12:F4}");
+                    }
+                }
+
+                // DO[7] = A (4 phases: neut, phsA, phsB, phsC)
+                {
+                    Console.WriteLine($"\n{"A",-10}");
+                    var phases = new[] { "neut", "phsA", "phsB", "phsC" };
+                    MmsValue a = mmxu.GetElement(7);
+                    for (int j = 0; j < 4; j++)
+                    {
+                        float val = GetPhaseValue(a.GetElement(j));
+                        Console.WriteLine($"  {"",-8} {phases[j],-10} {val,12:F4}");
                     }
                 }
 
 
-				con.Release();
+
+
+                con.Release();
             }
             catch (IedConnectionException e)
             {

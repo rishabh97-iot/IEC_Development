@@ -1,4 +1,6 @@
-﻿using IEC.Shared.Services;
+﻿using IEC.Shared.IECInterface;
+using IEC.Shared.IECServices;
+using IEC.Shared.Services;
 using IECGUI.Services;
 using IECGUI.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +37,11 @@ namespace IECGUI
                     sp.GetRequiredService<MultiEnergyMeterTcpService>()));
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ConfigurationManagerService>();
+
+
+            //IEC 618850 services
+
+            services.AddSingleton<IIec61850MeterService, Iec61850MeterService>();
 
             // ViewModels
             services.AddTransient<MainWindowViewModel>();

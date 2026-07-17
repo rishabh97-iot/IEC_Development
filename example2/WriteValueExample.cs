@@ -24,25 +24,22 @@ namespace example2
             try
             {
                 con.Connect(hostname, 102);
-                //MmsVariableSpecification specification = con.GetVariableSpecification("IED_1234MEAS/MMXU1.A.phsA", FunctionalConstraint.MX);
 
-                //Console.WriteLine(specification);
                 int n = 0;
-                while (n < 100)
+                while (n < 1)
                 {
-                    // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.Hz", FunctionalConstraint.MX);
-                    // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
-                    MmsValue PPV = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
-                   // MmsValue A = con.ReadValue("IED_1234MEAS/MMXU1.A", FunctionalConstraint.MX);
-                    //MmsValue PhV = con.ReadValue("IED_1234MEAS/MMXU1.PhV", FunctionalConstraint.MX);
+                    
+                    MmsValue PPV = con.ReadValue("IED_1234MEAS/MMXU1", FunctionalConstraint.MX);
+          
                     Console.WriteLine("\n");
                     foreach (MmsValue v in PPV)
-                    {                     
-                        foreach(MmsValue v2 in v.GetElement(0)) 
-                        {
-                            Console.WriteLine($"{v2}");
-                            
-                        }
+                    {
+                        if (v.Size() > 0 && v != null )
+                            foreach (MmsValue v2 in v.GetElement(0))
+                            {
+                                Console.WriteLine($"{v2}");
+
+                            }
                     }
                     Thread.Sleep(500);
                     n++;
