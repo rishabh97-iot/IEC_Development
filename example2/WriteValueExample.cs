@@ -28,32 +28,78 @@ namespace example2
 
                 //Console.WriteLine(specification);
                 int n = 0;
-                while (n < 50)
+                while (n < 100)
                 {
                     // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.Hz", FunctionalConstraint.MX);
-                   // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
-                    MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
-
-                    //Console.WriteLine(" Value-: "+value.ToString());
-                    MmsValue mag = value.GetElement(0);
-
-               // Console.WriteLine("mag type = " + mag.GetType());
-               // Console.WriteLine("mag size = " + mag.Size());
-                MmsValue ef = value.GetElement(0);
-                    // Console.WriteLine(" IED_1234MEAS/MMXU1.PPV : " + ef);
-
-                    for (int i = 0; i < mag.Size(); i++)
-                    {
-                        MmsValue e = mag.GetElement(i);
-
-                        Console.WriteLine($"mag[{i}] Type={e.GetType()} Value={e}");
+                    // MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
+                    MmsValue PPV = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
+                   // MmsValue A = con.ReadValue("IED_1234MEAS/MMXU1.A", FunctionalConstraint.MX);
+                    //MmsValue PhV = con.ReadValue("IED_1234MEAS/MMXU1.PhV", FunctionalConstraint.MX);
+                    Console.WriteLine("\n");
+                    foreach (MmsValue v in PPV)
+                    {                     
+                        foreach(MmsValue v2 in v.GetElement(0)) 
+                        {
+                            Console.WriteLine($"{v2}");
+                            
+                        }
                     }
-
                     Thread.Sleep(500);
                     n++;
                 }
 
-                
+                //Value -: { PPV}
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00}
+
+
+                //Value -: { A}
+
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00}
+
+                //Value -: { PhV }
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00},
+                //{ { { 0} }, { { 0} }, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00}
+
+                //Value -: {Hz}
+                //{ NaN}, { NaN}, 0100001000000, 7 / 16 / 2026 11:56:51 AM + 00:00
+
+                //Value -: {TotPF}
+                //{ NaN}, { NaN}, 0100001000000, 7 / 16 / 2026 11:56:51 AM + 00:00
+
+                //Value -: {TotVA}
+                //{ 0}, { 0}, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00
+
+                //Value -: {TotVAr}
+                //{ 0}, { 0}, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00
+
+                //Value -: {TotW}
+                //{ 0}, { 0}, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00
+
+
+                //Value -: { urcbA01 }
+                //{, False, False, , 1, 0000000000, 0, 0, 000001, 0, False}
+
+                //Value -: { urcbB01}
+                //{ , False, False, , 1, 0000000000, 0, 0, 000001, 0, False}
+
+                //Value -: { NamPlt}
+
+                //{ SIEMENS, 04.43.16, , 160304190901000}\
+
+                //Value -: { Beh}
+
+                //{ 1, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00}
+
+                //Value -: { Health}
+
+                //{ 1, 0000000000000, 7 / 16 / 2026 11:56:51 AM + 00:00}
 
 
                 con.Abort();

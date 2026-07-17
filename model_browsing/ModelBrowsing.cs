@@ -86,7 +86,7 @@ namespace model_browsing
 							foreach (string dataDirectoryElement in dataDirectory) {
 
 								string daReference = logicalNodeReference + "." + dataObject + "." + ObjectReference.getElementName(dataDirectoryElement);
-                                Console.WriteLine($" daRefrence -> {daReference}");
+                               // Console.WriteLine($" daRefrence -> {daReference}");
 								// get the type specification of a variable
 								MmsVariableSpecification specification = con.GetVariableSpecification(daReference,  ObjectReference.getFC(dataDirectoryElement));
 
