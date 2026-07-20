@@ -112,7 +112,7 @@ namespace client_example_async
                 Console.WriteLine("Now read variables...");
 
                 /* read FCDO */
-                con.ReadValueAsync("simpleIOGenericIO/GGIO1.AnIn1", FunctionalConstraint.MX, delegate(uint invokeId, object parameter, IedClientError err, MmsValue value) {
+                con.ReadValueAsync("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX, delegate(uint invokeId, object parameter, IedClientError err, MmsValue value) {
 
                     if (err == IedClientError.IED_ERROR_OK) 
                     {
@@ -137,7 +137,7 @@ namespace client_example_async
 
                 }, null);
 
-                con.ReadValueAsync("simpleIOGenericIO/GGIO1.AnIn1", FunctionalConstraint.MX, delegate(uint invokeId, object parameter, IedClientError err, MmsValue value) {
+                con.ReadValueAsync("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX, delegate(uint invokeId, object parameter, IedClientError err, MmsValue value) {
 
                     if (err == IedClientError.IED_ERROR_OK) 
                     {

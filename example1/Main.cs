@@ -30,55 +30,55 @@ namespace example1
             {
                 con.Connect(hostname, port);
 
-                List<string> serverDirectory = con.GetServerDirectory(false);
+   //             List<string> serverDirectory = con.GetServerDirectory(false);
 
-                foreach (string entry in serverDirectory)
-                {
-                    Console.WriteLine("LD: " + entry);
-                }
+   //             foreach (string entry in serverDirectory)
+   //             {
+   //                 Console.WriteLine("LD: " + entry);
+   //             }
 
 
-				List<string> lnDirectory = con.GetLogicalNodeDirectory("simpleIOGenericIO/LLN0", ACSIClass.ACSI_CLASS_DATA_SET);
+			//	List<string> lnDirectory = con.GetLogicalNodeDirectory("IED_1234MEAS/MMXU1", ACSIClass.ACSI_CLASS_DATA_SET);
 
-                foreach (string entry in lnDirectory)
-                {
-                    Console.WriteLine("Dataset: " + entry);
-                }
+   //             foreach (string entry in lnDirectory)
+   //             {
+   //                 Console.WriteLine("Dataset: " + entry);
+   //             }
 
-			//	string vendor = con.ReadStringValue ("simpleIOGenericIO/LLN0.NamPlt.vendor", FunctionalConstraint.DC);
-             //   Console.WriteLine ("Vendor: " + vendor);
+			////	string vendor = con.ReadStringValue ("simpleIOGenericIO/LLN0.NamPlt.vendor", FunctionalConstraint.DC);
+   //          //   Console.WriteLine ("Vendor: " + vendor);
 
-                /* read FCDO */
-                MmsValue value = con.ReadValue("simpleIOGenericIO/GGIO1.AnIn1", FunctionalConstraint.MX);
+   //             /* read FCDO */
+   //             MmsValue value = con.ReadValue("IED_1234MEAS/MMXU1.PPV", FunctionalConstraint.MX);
 
-                if (value.GetType() == MmsType.MMS_STRUCTURE)
-                {
-                    Console.WriteLine("Value is of complex type");
+   //             if (value.GetType() == MmsType.MMS_STRUCTURE)
+   //             {
+   //                 Console.WriteLine("Value is of complex type");
 
-                    for (int i = 0; i < value.Size(); i++)
-                    {
-                        Console.WriteLine("  element: " + value.GetElement(i).GetType());
-                        if (value.GetElement(i).GetType() == MmsType.MMS_UTC_TIME)
-                        {
-                            Console.WriteLine("   -> " + value.GetElement(i).GetUtcTimeAsDateTimeOffset());
-                        }
-                    }
-                }
+   //                 for (int i = 0; i < value.Size(); i++)
+   //                 {
+   //                     Console.WriteLine("  element: " + value.GetElement(i).GetType());
+   //                     if (value.GetElement(i).GetType() == MmsType.MMS_UTC_TIME)
+   //                     {
+   //                         Console.WriteLine("   -> " + value.GetElement(i).GetUtcTimeAsDateTimeOffset());
+   //                     }
+   //                 }
+   //             }
 
-                DataSet dataSet = con.ReadDataSetValues("simpleIOGenericIO/LLN0.Events", null);
+   //             DataSet dataSet = con.ReadDataSetValues("IED_1234MEAS/MMXU1.PPV", null);
 
-                Console.WriteLine("Read data set " + dataSet.GetReference());
+   //             Console.WriteLine("Read data set " + dataSet.GetReference());
 
-                /* read multiple variables (WARNING: this is not IEC 61850 standard compliant but might
-                 * be supported by most servers).
-                 */
-                MmsConnection mmsConnection = con.GetMmsConnection();
+   //             /* read multiple variables (WARNING: this is not IEC 61850 standard compliant but might
+   //              * be supported by most servers).
+   //              */
+   //             MmsConnection mmsConnection = con.GetMmsConnection();
 
-                MmsValue result = mmsConnection.ReadMultipleVariables("simpleIOGenericIO", new List<string>() {
-                    "GGIO1$ST$Ind1", "GGIO1$ST$Ind1", "GGIO1$ST$Ind1","GGIO1$ST$Ind1"
-                });
+   //             MmsValue result = mmsConnection.ReadMultipleVariables("IED_1234MEAS/MMXU1", new List<string>() {
+   //                 "PPV", "A", "PhV","Hz"
+   //             });
 
-                Console.WriteLine(result.ToString());
+   //             Console.WriteLine(result.ToString());
 
                 con.Abort();
             }
