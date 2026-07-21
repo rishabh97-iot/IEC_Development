@@ -101,6 +101,25 @@ namespace IEC.Shared.IECServices
                                     .ToDouble();
         }
 
+
+        // Implementing the other methods from the interface as placeholders
+
+
+        public Task ConnectAllAsync(List<RelayConfig> relays)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Dictionary<int, RelayReadingModel>> ReadAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RelayReadingModel> ReadOneAsync(int relayId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Disconnect()
         {
             try { _con?.Release(); } catch { }

@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace IEC.Shared.Models
 {
+    public class MqttRawReading
+    {
+        public string StationId { get; set; }
+        public string MeterId { get; set; }
+        public string Topic { get; set; }
+        public DateTime Timestamp { get; set; }
+        public Dictionary<string, string> Values { get; set; } = new();
+    }
     public class MqttMeterReading
     {
         public string StationId { get; set; }
