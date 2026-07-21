@@ -66,10 +66,10 @@
                         Height="40"
                         Margin="10" Command="{Binding RelayPage}"/>
 
-                <Button Content="EXPORT PDF"
+                <Button Content="MQTT Browser"
                         Width="120"
                         Height="40"
-                        Margin="10" Command="{Binding ExportPdfCommand}"/>
+                        Margin="10" Command="{Binding MqttBrowserCommand}"/>
 
                 <Button Content="BACK"
                         Width="120"

@@ -38,6 +38,9 @@ namespace IECGUI
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ConfigurationManagerService>();
 
+            services.AddSingleton<IMqttClientService, MqttClientService>();
+            services.AddTransient<MqttMonitorViewModel>();
+
 
             //IEC 618850 services
 
