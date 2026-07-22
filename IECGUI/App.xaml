@@ -45,7 +45,11 @@
 
             <DataTemplate DataType="{x:Type vm:MqttMonitorViewModel}">
                 <view:MqttMonitorView/>
-            </DataTemplate> 
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:IecConfigViewModel}">
+                <view:IecConfigView/>
+            </DataTemplate>
 
         </ResourceDictionary>
 

@@ -37,6 +37,7 @@ namespace IECGUI
                     sp.GetRequiredService<MultiEnergyMeterTcpService>()));
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ConfigurationManagerService>();
+            services.AddSingleton<IecConfigManagerService>();
 
             services.AddSingleton<IMqttClientService, MqttClientService>();
             services.AddTransient<MqttMonitorViewModel>();
@@ -45,6 +46,8 @@ namespace IECGUI
             //IEC 618850 services
 
             services.AddSingleton<IIec61850MeterService, Iec61850MeterService>();
+            services.AddTransient<IecConfigViewModel>();
+
 
             // ViewModels
             services.AddTransient<MainWindowViewModel>();

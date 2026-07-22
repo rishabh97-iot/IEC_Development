@@ -31,6 +31,11 @@
                     Width="100" Height="35"
                     DockPanel.Dock="Left"
                     Foreground="White" Background="#3D5A80"/>
+            <Button Content="Configuration"
+                    Command="{Binding ConfigurationCommand}"
+                    Width="100" Height="35"
+                    DockPanel.Dock="Left" Margin="10,0,0,0"
+                    Foreground="White" Background="#3D5A80"/>
             <TextBlock Text="IEC 61850 — Protection Relay Monitor"
                        Foreground="White" FontSize="22"
                        FontWeight="Bold"
