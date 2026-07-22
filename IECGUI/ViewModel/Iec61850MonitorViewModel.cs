@@ -104,7 +104,7 @@ namespace IECGUI.ViewModel
                 _pollTimer = new DispatcherTimer
                 {
                     Interval = TimeSpan.FromMilliseconds(
-                        config.Relays.Any() ? config.Relays.Min(r => r.PollIntervalMs) : 1000)
+                        config.Relays.Any() ? config.Relays.Min(r => r.PollIntervalMs) : 3000)
                 };
                 _pollTimer.Tick += async (s, e) => await PollAsync();
                 _pollTimer.Start();
@@ -126,18 +126,14 @@ namespace IECGUI.ViewModel
                 {
                     foreach (var result in results)
                     {
-                        // Find existing row and update it in-place
                         var existing = RelayReadings
                             .FirstOrDefault(r => r.RelayId == result.Key);
 
                         if (existing != null)
                         {
-                            int index = RelayReadings.IndexOf(existing);
-                            RelayReadings[index] = result.Value;
-
-                            // Keep selection in sync
-                            if (SelectedRelay?.RelayId == result.Key)
-                                SelectedRelay = result.Value;
+                            // Update IN-PLACE — object reference stays same
+                            // DataGrid row stays selected, detail panel stays visible
+                            existing.UpdateFrom(result.Value);
                         }
                     }
 

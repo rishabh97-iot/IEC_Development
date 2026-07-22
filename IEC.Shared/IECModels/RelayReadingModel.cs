@@ -6,18 +6,45 @@ using System.Threading.Tasks;
 
 namespace IEC.Shared.IECModels
 {
-    public class RelayReadingModel
+   
+    public class RelayReadingModel : ObservableObjectVM  // must implement INotifyPropertyChanged
     {
-        public bool IsOnline { get; set; }
-        public string ErrorMessage { get; set; }
-        public int RelayId { get; set; }
-        public string RelayName { get; set; }
+        private bool _isOnline;
+        public bool IsOnline
+        {
+            get => _isOnline;
+            set { _isOnline = value; OnPropertyChanged(); }
+        }
 
-        // Config-driven values — ParameterName → Value
-        // eg: "Hz" → 50.07, "PhV_A" → 7.5
-        public Dictionary<string, float> Values { get; set; } = new();
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set { _errorMessage = value; OnPropertyChanged(); }
+        }
 
-        // Convenience properties (backward compatible)
+        private int _relayId;
+        public int RelayId
+        {
+            get => _relayId;
+            set { _relayId = value; OnPropertyChanged(); }
+        }
+
+        private string _relayName;
+        public string RelayName
+        {
+            get => _relayName;
+            set { _relayName = value; OnPropertyChanged(); }
+        }
+
+        private Dictionary<string, float> _values = new();
+        public Dictionary<string, float> Values
+        {
+            get => _values;
+            set { _values = value; OnPropertyChanged(); }
+        }
+
+        // Convenience properties
         public float Hz => Values.GetValueOrDefault("Hz");
         public float PhV_A => Values.GetValueOrDefault("PhV_A");
         public float PhV_B => Values.GetValueOrDefault("PhV_B");
@@ -32,6 +59,30 @@ namespace IEC.Shared.IECModels
         public float TotVA => Values.GetValueOrDefault("TotVA");
         public float TotVAr => Values.GetValueOrDefault("TotVAr");
         public float TotPF => Values.GetValueOrDefault("TotPF");
+
+        // Update properties in-place — no new object, no selection reset
+        public void UpdateFrom(RelayReadingModel source)
+        {
+            IsOnline = source.IsOnline;
+            ErrorMessage = source.ErrorMessage;
+            Values = source.Values;
+
+            // Notify all convenience properties at once
+            OnPropertyChanged(nameof(Hz));
+            OnPropertyChanged(nameof(PhV_A));
+            OnPropertyChanged(nameof(PhV_B));
+            OnPropertyChanged(nameof(PhV_C));
+            OnPropertyChanged(nameof(PPV_AB));
+            OnPropertyChanged(nameof(PPV_BC));
+            OnPropertyChanged(nameof(PPV_CA));
+            OnPropertyChanged(nameof(A_PhsA));
+            OnPropertyChanged(nameof(A_PhsB));
+            OnPropertyChanged(nameof(A_PhsC));
+            OnPropertyChanged(nameof(TotW));
+            OnPropertyChanged(nameof(TotVA));
+            OnPropertyChanged(nameof(TotVAr));
+            OnPropertyChanged(nameof(TotPF));
+        }
     }
 
 }
