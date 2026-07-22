@@ -138,7 +138,7 @@ namespace IECGUI.ViewModel
 
         private void NavigateToHome()
         {
-            _navigation.NavigateTo<Dashboard1ViewModel>();
+            _navigation.NavigateTo<HomePageViewModel>();
         }
 
         private void NavigateToMQTTPage()
