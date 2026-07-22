@@ -18,6 +18,8 @@ namespace IECGUI.ViewModel
         public ICommand ConfigViewCommand { get; }
         public ICommand ProtRelayMonitorViewCommand { get; }
 
+        public ICommand MqttViewCommad { get; }
+
 
 
         private readonly INavigationService _navigation;
@@ -31,6 +33,7 @@ namespace IECGUI.ViewModel
             GaugeViewCommand = new RelayCommand(() => _navigation.NavigateTo<EnergyMonitorViewModel2>());
             ConfigViewCommand = new RelayCommand(() => _navigation.NavigateTo<ConfigurationViewModel>());
             ProtRelayMonitorViewCommand = new RelayCommand(() => _navigation.NavigateTo<Iec61850MonitorViewModel>());
+            MqttViewCommad = new RelayCommand(() => _navigation.NavigateTo<MqttMonitorViewModel>());
         }
     }
 }

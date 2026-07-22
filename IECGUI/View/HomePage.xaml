@@ -30,7 +30,7 @@
                     <ControlTemplate TargetType="Button">
 
                         <Border x:Name="GlassBorder"
-                        CornerRadius="28"
+                        CornerRadius="15"
                         BorderBrush="#80FFFFFF"
                         BorderThickness="1"
                         Background="{TemplateBinding Background}">
@@ -179,9 +179,24 @@
                         <TextBlock Text="Protection Relay"  FontSize="30"  Margin="0,10,0,0" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Content="None" Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}"></Button>
-                <Button Content="None" Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}" ></Button>
-                <Button Content="None" Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}"></Button>
+                <Button  Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE774;" FontSize="42" HorizontalAlignment="Center"/>
+                        <TextBlock Text="MQTT Browser"  FontSize="30"  Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}" >
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7F4;" FontSize="42" HorizontalAlignment="Center"/>
+                        <TextBlock Text=""  FontSize="30"  Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource GlassCardButton}" FontSize="50" FontWeight="Bold" Height="150" Width="400" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewCommand}">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7F4;" FontSize="42" HorizontalAlignment="Center"/>
+                        <TextBlock Text=""  FontSize="30"  Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Grid>
 

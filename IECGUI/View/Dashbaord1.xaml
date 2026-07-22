@@ -42,11 +42,11 @@
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center">
 
-                    <Button Content="Energy Monitor" Width="100" Command="{Binding HomeCommand}"/>
+                    <!--<Button Content="Energy Monitor" Width="100" Command="{Binding HomeCommand}"/>
                     <Button Content="Gauge View" Width="100" Command="{Binding AlarmCommand}"/>
                     <Button Content="Relay Status" Width="100"  Command="{Binding EventsCommand}"/>
-                    <Button Content="Meter Config" Width="100" Command="{Binding TrendingCommand}"/>
-                    <Button Content="Menu" Width="100" Command="{Binding MenuCommand}"/>
+                    <Button Content="Meter Config" Width="100" Command="{Binding TrendingCommand}"/>-->
+                    <Button Content="Menu" Margin="1550,0,0,0" Width="100" Command="{Binding MenuCommand}"/>
                 </StackPanel>
 
             </DockPanel>
