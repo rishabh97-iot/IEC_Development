@@ -15,7 +15,6 @@ namespace IECGUI.ViewModel
         private readonly INavigationService _navigation;
         private readonly IecConfigManagerService _configManager;
 
-        // ── readonly nahi — InitializeAsync mein assign hoga ──
         private DispatcherTimer _pollTimer;
 
         // ── Connection Status ──────────────────────────────────
@@ -33,14 +32,22 @@ namespace IECGUI.ViewModel
             set { _statusMessage = value; OnPropertyChanged(); }
         }
 
-        // ── Multi Relay Readings ───────────────────────────────
+        // ── Multi Relay Readings (DataGrid source) ─────────────
         public ObservableCollection<RelayReadingModel> RelayReadings { get; }
             = new ObservableCollection<RelayReadingModel>();
 
+        // ── Selected Relay (Detail Panel) ──────────────────────
+        private RelayReadingModel _selectedRelay;
+        public RelayReadingModel SelectedRelay
+        {
+            get => _selectedRelay;
+            set { _selectedRelay = value; OnPropertyChanged(); }
+        }
+
         // ── Commands ───────────────────────────────────────────
         public ICommand BackCommand { get; }
-
         public ICommand ConfigurationCommand { get; }
+
         public Iec61850MonitorViewModel(
             INavigationService navigation,
             IIec61850MeterService service,
@@ -51,22 +58,18 @@ namespace IECGUI.ViewModel
             _configManager = configManager;
 
             BackCommand = new RelayCommand(() =>
-                _navigation.NavigateTo<EnergyMonitorViewModel2>());
+                _navigation.NavigateTo<HomePageViewModel>());
 
-            ConfigurationCommand = new RelayCommand(NavigateToConfigView);
+            ConfigurationCommand = new RelayCommand(() =>
+                _navigation.NavigateTo<IecConfigViewModel>());
 
-            // Async init — constructor se fire karo
             _ = InitializeAsync();
         }
 
-        private void NavigateToConfigView()
-        {             _navigation.NavigateTo<IecConfigViewModel>();
-        }
         private async Task InitializeAsync()
         {
             try
             {
-                // Config load karo
                 var config = _configManager.Load();
 
                 if (!config.Relays.Any())
@@ -77,17 +80,31 @@ namespace IECGUI.ViewModel
 
                 StatusMessage = "Connecting to relays...";
 
-                // Sab relays connect karo
                 await _service.ConnectAllAsync(config.Relays);
+
+                // Pre-populate rows so UI shows relay names immediately
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    foreach (var relay in config.Relays.Where(r => r.IsEnabled))
+                    {
+                        RelayReadings.Add(new RelayReadingModel
+                        {
+                            RelayId = relay.RelayId,
+                            RelayName = relay.RelayName,
+                            IsOnline = false
+                        });
+                    }
+
+                    SelectedRelay = RelayReadings.FirstOrDefault();
+                });
 
                 IsOnline = true;
                 StatusMessage = $"Connected — {config.Relays.Count(r => r.IsEnabled)} relay(s)";
 
-                // Polling start — sabse chhota interval use karo
                 _pollTimer = new DispatcherTimer
                 {
                     Interval = TimeSpan.FromMilliseconds(
-                        config.Relays.Min(r => r.PollIntervalMs))
+                        config.Relays.Any() ? config.Relays.Min(r => r.PollIntervalMs) : 1000)
                 };
                 _pollTimer.Tick += async (s, e) => await PollAsync();
                 _pollTimer.Start();
@@ -107,12 +124,24 @@ namespace IECGUI.ViewModel
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    RelayReadings.Clear();
+                    foreach (var result in results)
+                    {
+                        // Find existing row and update it in-place
+                        var existing = RelayReadings
+                            .FirstOrDefault(r => r.RelayId == result.Key);
 
-                    foreach (var reading in results.Values)
-                        RelayReadings.Add(reading);
+                        if (existing != null)
+                        {
+                            int index = RelayReadings.IndexOf(existing);
+                            RelayReadings[index] = result.Value;
 
-                    IsOnline = results.Values.Any(r => r.IsOnline);
+                            // Keep selection in sync
+                            if (SelectedRelay?.RelayId == result.Key)
+                                SelectedRelay = result.Value;
+                        }
+                    }
+
+                    IsOnline = RelayReadings.Any(r => r.IsOnline);
                     StatusMessage = IsOnline ? "Live" : "Connection Lost";
                 });
             }

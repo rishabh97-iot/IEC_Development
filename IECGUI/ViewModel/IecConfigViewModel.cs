@@ -92,7 +92,7 @@ namespace IECGUI.ViewModel
             _navigation = navigation;
             _configManager = configManager;
 
-            BackCommand = new RelayCommand(() => _navigation.NavigateTo<HomePageViewModel>());
+            BackCommand = new RelayCommand(() => _navigation.NavigateTo<Iec61850MonitorViewModel>());
             SaveCommand = new RelayCommand(Save);
 
             AddRelayCommand = new RelayCommand(AddRelay);
