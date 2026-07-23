@@ -14,4 +14,205 @@
         </Setter>
     </Style>
 
+
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- Glass Button Base Style                                -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <Style x:Key="GlassButton" TargetType="Button">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!-- Shadow layer -->
+                        <Border x:Name="Shadow"
+                                CornerRadius="8"
+                                Margin="0,2,0,0"
+                                Background="#22000000"/>
+
+                        <!-- Main glass body -->
+                        <Border x:Name="Body"
+                                CornerRadius="8"
+                                BorderThickness="1"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+
+                            <!-- Glass shine overlay -->
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="White" Offset="0"/>
+                                    <GradientStop Color="White" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                        </Border>
+
+                        <!-- Top shine highlight -->
+                        <Border x:Name="Shine"
+                                CornerRadius="8,8,0,0"
+                                Height="17"
+                                VerticalAlignment="Top"
+                                Margin="1,1,1,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#55FFFFFF" Offset="0"/>
+                                    <GradientStop Color="#11FFFFFF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <!-- Border outline -->
+                        <Border x:Name="Outline"
+                                CornerRadius="8"
+                                BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#88FFFFFF" Offset="0"/>
+                                    <GradientStop Color="#22FFFFFF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                        </Border>
+
+                        <!-- Content -->
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="12,0"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Shine"
+                                    Property="Opacity" Value="0.9"/>
+                            <Setter TargetName="Body"
+                                    Property="Opacity" Value="0.85"/>
+                        </Trigger>
+
+                        <!-- Pressed -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Shine"
+                                    Property="Opacity" Value="0.2"/>
+                            <Setter TargetName="Body"
+                                    Property="Opacity" Value="1"/>
+                            <Setter TargetName="Shadow"
+                                    Property="Opacity" Value="0"/>
+                            <Setter TargetName="Body"
+                                    Property="Margin" Value="0,2,0,-2"/>
+                        </Trigger>
+
+                        <!-- Disabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- Color Variants — just set Background + BorderBrush    -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Blue — Navigation / Default -->
+    <Style x:Key="GlassButton.Blue"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FF3D6DB5" Offset="0"/>
+                    <GradientStop Color="#FF1E3A6E" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FF5A8FD6"/>
+    </Style>
+
+    <!-- Green — Connect / Save / Confirm -->
+    <Style x:Key="GlassButton.Green"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FF27AE60" Offset="0"/>
+                    <GradientStop Color="#FF145A32" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FF2ECC71"/>
+    </Style>
+
+    <!-- Red — Disconnect / Delete / Danger -->
+    <Style x:Key="GlassButton.Red"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FFC0392B" Offset="0"/>
+                    <GradientStop Color="#FF6E1A12" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FFE74C3C"/>
+    </Style>
+
+    <!-- Purple — Configuration / Settings -->
+    <Style x:Key="GlassButton.Purple"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FF8E44AD" Offset="0"/>
+                    <GradientStop Color="#FF4A235A" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FFA569BD"/>
+    </Style>
+
+    <!-- Cyan — Info / Monitor -->
+    <Style x:Key="GlassButton.Cyan"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FF0097A7" Offset="0"/>
+                    <GradientStop Color="#FF004D56" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FF00BCD4"/>
+    </Style>
+
+    <!-- Ghost — Subtle / Secondary actions -->
+    <Style x:Key="GlassButton.Ghost"
+           TargetType="Button"
+           BasedOn="{StaticResource GlassButton}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#44FFFFFF" Offset="0"/>
+                    <GradientStop Color="#11FFFFFF" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#55FFFFFF"/>
+    </Style>
+
+
+
+
+
 </ResourceDictionary>

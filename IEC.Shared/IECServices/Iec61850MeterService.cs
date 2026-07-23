@@ -88,16 +88,24 @@ namespace IEC.Shared.IECServices
         // ── Read All Relays ─────────────────────────────────────
         public async Task<Dictionary<int, RelayReadingModel>> ReadAllAsync()
         {
-            var tasks = _connections.Values
-                .Select(async conn =>
-                {
-                    var reading = await ReadFromConnection(conn);
-                    return (conn.Config.RelayId, reading);
-                });
+            try
+            {
+                var tasks = _connections.Values
+                    .Select(async conn =>
+                    {
+                        var reading = await ReadFromConnection(conn);
+                        return (conn.Config.RelayId, reading);
+                    });
 
-            var results = await Task.WhenAll(tasks);
+                var results = await Task.WhenAll(tasks);
 
-            return results.ToDictionary(r => r.RelayId, r => r.reading);
+                return results.ToDictionary(r => r.RelayId, r => r.reading);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[READ ALL ERROR] {ex.Message}");
+                return new Dictionary<int, RelayReadingModel>();
+            }
         }
 
         // ── Read Single Relay by ID ─────────────────────────────
@@ -118,6 +126,12 @@ namespace IEC.Shared.IECServices
         {
             return Task.Run(() =>
             {
+                if (conn == null)
+                    return new RelayReadingModel
+                    {
+                        IsOnline = false,
+                        ErrorMessage = "Connection is null"
+                    };
                 lock (conn.Lock)
                 {
                     if (!conn.IsConnected)

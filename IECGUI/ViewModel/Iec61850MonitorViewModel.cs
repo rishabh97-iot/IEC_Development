@@ -47,6 +47,9 @@ namespace IECGUI.ViewModel
         // ── Commands ───────────────────────────────────────────
         public ICommand BackCommand { get; }
         public ICommand ConfigurationCommand { get; }
+        public ICommand ConnectCommand { get; }
+        public ICommand DisconnectCommand { get; }
+
 
         public Iec61850MonitorViewModel(
             INavigationService navigation,
@@ -63,9 +66,27 @@ namespace IECGUI.ViewModel
             ConfigurationCommand = new RelayCommand(() =>
                 _navigation.NavigateTo<IecConfigViewModel>());
 
-            _ = InitializeAsync();
+
+            ConnectCommand = new RelayCommand(async () => await ConnectAsync());
+            DisconnectCommand = new RelayCommand(async () => await DisconnectAsync());
+
+           
+        }
+        private async Task ConnectAsync()
+        {
+            if (!IsOnline)
+            {
+                await InitializeAsync();
+            }
         }
 
+        private async Task DisconnectAsync()
+        {
+            Cleanup();
+            IsOnline = false;
+            StatusMessage = "Disconnected";
+            RelayReadings.Clear();
+        }
         private async Task InitializeAsync()
         {
             try

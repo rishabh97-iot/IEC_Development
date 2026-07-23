@@ -26,18 +26,24 @@
             <Button Content="◄ Back"
                     Command="{Binding BackCommand}"
                     Width="100" Height="35"
-                    DockPanel.Dock="Left"
+                    DockPanel.Dock="Left" Style="{StaticResource GlassButton.Blue}"
                     Foreground="White" Background="#3D5A80"/>
             <Button Content="⚙ Configuration"
                     Command="{Binding ConfigurationCommand}"
                     Width="130" Height="35"
-                    DockPanel.Dock="Left" Margin="10,0,0,0"
-                    Foreground="White" Background="#8E44AD"/>
+                    DockPanel.Dock="Left" Margin="10,0,0,0" Style="{StaticResource GlassButton.Purple}"
+                    Foreground="White" />
             <TextBlock Text="IEC 61850 — Protection Relay Monitor"
                        Foreground="White" FontSize="22"
-                       FontWeight="Bold"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+                       FontWeight="Bold" 
+                       VerticalAlignment="Center" Margin="520,0,0,0"/>
+            <Button Content="Connect" Command="{Binding ConnectCommand}"
+                    Width="100" Height="35" DockPanel.Dock="Right" Style="{StaticResource GlassButton.Green}"
+                    Foreground="White" />
+            <Button Content="Disconnect" Command="{Binding DisconnectCommand}"
+                    Width="100" Height="35" Margin="500,0,0,0" Style="{StaticResource GlassButton.Red}"
+                    Foreground="White" />
+
         </DockPanel>
 
         <!-- Status Bar -->
