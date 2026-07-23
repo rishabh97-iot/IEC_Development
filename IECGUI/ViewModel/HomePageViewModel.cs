@@ -20,6 +20,10 @@ namespace IECGUI.ViewModel
 
         public ICommand MqttViewCommad { get; }
 
+        public ICommand ReportViewerCommand { get; }
+
+        public ICommand AlarmViewCommand { get; }
+
 
 
         private readonly INavigationService _navigation;
@@ -34,6 +38,7 @@ namespace IECGUI.ViewModel
             ConfigViewCommand = new RelayCommand(() => _navigation.NavigateTo<ConfigurationViewModel>());
             ProtRelayMonitorViewCommand = new RelayCommand(() => _navigation.NavigateTo<Iec61850MonitorViewModel>());
             MqttViewCommad = new RelayCommand(() => _navigation.NavigateTo<MqttMonitorViewModel>());
+            ReportViewerCommand = new RelayCommand(() => _navigation.NavigateTo<ReportViewerViewModel>());
         }
     }
 }

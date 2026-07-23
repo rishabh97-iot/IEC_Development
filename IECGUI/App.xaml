@@ -51,6 +51,11 @@
                 <view:IecConfigView/>
             </DataTemplate>
 
+
+            <DataTemplate DataType="{x:Type vm:ReportViewerViewModel}">
+                <view:ReportViewerView/>
+            </DataTemplate>
+
         </ResourceDictionary>
 
     </Application.Resources>

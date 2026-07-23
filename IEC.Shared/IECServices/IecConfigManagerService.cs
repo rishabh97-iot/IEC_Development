@@ -24,7 +24,7 @@ namespace IEC.Shared.IECServices
 
         public IecConfigManagerService()
         {
-            // Config file app ke saath same folder mein rahegi
+            
             string appFolder = AppDomain.CurrentDomain.BaseDirectory;
             _configFilePath = Path.Combine(appFolder, "iec61850_config.json");
         }
@@ -36,7 +36,7 @@ namespace IEC.Shared.IECServices
             {
                 if (!File.Exists(_configFilePath))
                 {
-                    // Pehli baar — default config return karo
+                
                     var defaultConfig = new IecConfigRoot();
                     defaultConfig.Relays.Add(IecDefaultConfig.GetDefault());
                     Save(defaultConfig);
@@ -71,7 +71,7 @@ namespace IEC.Shared.IECServices
             }
         }
 
-        // ── Config file path expose karo (debug ke liye) ──────
+        
         public string ConfigFilePath => _configFilePath;
     }
 }

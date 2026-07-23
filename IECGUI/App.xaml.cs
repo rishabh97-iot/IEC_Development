@@ -58,6 +58,7 @@ namespace IECGUI
             services.AddSingleton<ConfigurationViewModel>();
             services.AddSingleton<HomePageViewModel>();
             services.AddTransient<Iec61850MonitorViewModel>();
+            services.AddSingleton<ReportViewerViewModel>();
             // Views
             services.AddTransient<MainWindow>();
 
