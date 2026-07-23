@@ -12,7 +12,7 @@
     <Grid>
 
         <!-- LAYER 1 : Background Image -->
-        <Image Source="pack://application:,,,/IECGUI.Visuals;component/Images/Power3.jpg"
+        <Image Source="pack://application:,,,/IECGUI.Visuals;component/Images/Power4.jpg"
                Stretch="Fill">
 
             <Image.Effect>
@@ -74,7 +74,7 @@
                 <Button Content="BACK"
                         Width="120"
                         Height="40"
-                        Margin="10" Command="{Binding BackCommand}"/>
+                        Margin="10" Command="{Binding BackCommand}" Style="{StaticResource GlassButton.Cyan}"/>
 
                 <TextBlock Text=" "
                            FontSize="36"

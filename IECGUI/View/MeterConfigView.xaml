@@ -10,120 +10,7 @@
     <UserControl.Resources>
         <conv:ProtocolToVisibilityConverter x:Key="IsTcp" TargetProtocol="ModbusTcp"/>
         <conv:ProtocolToVisibilityConverter x:Key="IsRtu" TargetProtocol="ModbusRtu"/>
-        <Style x:Key="GlassCardButton" TargetType="Button">
-
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="100"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="36"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <SolidColorBrush Color="#55FFFFFF"/>
-                </Setter.Value>
-            </Setter>
-
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="Button">
-
-                        <Border x:Name="GlassBorder"
-                 CornerRadius="15"
-                 BorderBrush="#80FFFFFF"
-                 BorderThickness="1"
-                 Background="{TemplateBinding Background}">
-
-                            <Border.Effect>
-
-                                <DropShadowEffect BlurRadius="25"
-                                   ShadowDepth="4"
-                                   Opacity="0.35"/>
-
-                            </Border.Effect>
-
-                            <Grid>
-
-                                <!-- Top Glass Reflection -->
-
-                                <Border Height="45"
-                         VerticalAlignment="Top"
-                         Margin="8"
-                         CornerRadius="20"
-                         Opacity="0.35">
-
-                                    <Border.Background>
-
-                                        <LinearGradientBrush StartPoint="0,0"
-                                              EndPoint="0,1">
-
-                                            <GradientStop Color="White"
-                                           Offset="0"/>
-
-                                            <GradientStop Color="#00FFFFFF"
-                                           Offset="1"/>
-
-                                        </LinearGradientBrush>
-
-                                    </Border.Background>
-
-                                </Border>
-
-                                <!-- Content -->
-
-                                <ContentPresenter
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"/>
-
-                            </Grid>
-
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <!-- Mouse Over -->
-
-                            <Trigger Property="IsMouseOver"
-                      Value="True">
-
-                                <Setter TargetName="GlassBorder"
-                         Property="Background"
-                         Value="#77FFFFFF"/>
-
-                                <Setter TargetName="GlassBorder"
-                         Property="BorderBrush"
-                         Value="#FFFFFFFF"/>
-
-                            </Trigger>
-
-                            <!-- Click -->
-
-                            <Trigger Property="IsPressed"
-                      Value="True">
-
-                                <Setter TargetName="GlassBorder"
-                         Property="RenderTransform">
-
-                                    <Setter.Value>
-
-                                        <ScaleTransform ScaleX="0.97"
-                                         ScaleY="0.97"/>
-
-                                    </Setter.Value>
-
-                                </Setter>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
+       
     </UserControl.Resources>
 
 
@@ -236,7 +123,7 @@
                         <RowDefinition Height="60"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Content="🏠 Main Menu" Style="{StaticResource GlassCardButton}" Height="50" Width="430" Command="{Binding MenuCommand}"/>
+                    <Button Grid.Row="0" Content="🏠 Main Menu" Style="{StaticResource GlassButton.Cyan}" Height="50" Width="230" FontSize="20" Command="{Binding MenuCommand}"/>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -248,13 +135,13 @@
 
                             <DockPanel Grid.Row="1">
 
-                                <Button DockPanel.Dock="Bottom" FontSize="20" Style="{StaticResource GlassCardButton}"
+                                <Button DockPanel.Dock="Bottom" FontSize="20" Style="{StaticResource GlassButton.Ghost}"
                                 Content="🗑 Delete Meter"
                                 Height="35"
                                 Margin="5"
                                 Command="{Binding DeleteMeterCommand}"/>
 
-                                <Button DockPanel.Dock="Bottom" FontSize="20" Style="{StaticResource GlassCardButton}"
+                                <Button DockPanel.Dock="Bottom" FontSize="20" Style="{StaticResource GlassButton.Ghost}"
                                 Content="➕ Add Meter"
                                 Height="35"
                                 Margin="5"
@@ -333,7 +220,7 @@
                                           SelectedItem="{Binding SelectedMeter.Communication.SlaveId, Mode=TwoWay}"
                                           Margin="0,10,0,0" FontSize="20" HorizontalContentAlignment="Center" Background="#40456B" Foreground="Black" BorderBrush="#6A7AB5"/>
 
-                                <Button Margin="0,10,0,0"  Height="60" Width="250"  Style="{StaticResource GlassCardButton}"  Content="💾 Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
+                                <Button Margin="0,10,0,0"  Height="60" Width="250"  Style="{StaticResource GlassButton.Blue}"  Content="💾 Save Configuration" Command="{Binding SaveCommand}" FontSize="20"/>
 
                             </StackPanel>
                         </Border>
@@ -367,36 +254,42 @@
                     <!-- Toolbar -->
 
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox ItemsSource="{Binding Meters}" DisplayMemberPath="MeterName"
-                                 SelectedItem="{Binding SelectedMeter, Mode=TwoWay}" Width="Auto"
-                                  Margin="5"/>
+                        <ComboBox ItemsSource="{Binding Meters}"  Style="{StaticResource GlassComboBox}"
+                                  SelectedItem="{Binding SelectedMeter, Mode=TwoWay}" Width="Auto" 
+                                  Margin="5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MeterName}" Foreground="White"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
-                        <Button Content="Add"
+                        <Button Content="Add" Foreground="White" Background="LimeGreen" Style="{StaticResource GlassButton}"
                                 Width="90"
                                 Margin="5"
                                 Command="{Binding AddRegisterCommand}"/>
 
-                        <Button Content="Edit"
+                        <Button Content="Edit" Foreground="White" Style="{StaticResource GlassButton.Purple}"
                                 Width="90"
                                 Margin="5"
                                 Command="{Binding EditRegisterCommand}"/>
 
-                        <Button Content="Delete"
+                        <Button Content="Delete" Foreground="White" Style="{StaticResource GlassButton.Red}"
                                 Width="90"
                                 Margin="5"
                                 Command="{Binding DeleteRegisterCommand}"/>
 
-                        <Button Content="Save"
+                        <Button Content="Save" Foreground="White" Background="LimeGreen" Style="{StaticResource GlassButton}"
                                 Width="90"
                                 Margin="5"
                                 Command="{Binding SaveRegisterCommand}"/>
 
-                        <Button Content="Load Default"
+                        <Button Content="Load Default" Foreground="White" Style="{StaticResource GlassButton.Cyan}"
                                 Width="150"
                                 Margin="5"/>
                         <Button Content="Main Menu"
                                 Width="150"
-                                Margin="5" Command="{Binding MenuCommand}"/>
+                                Margin="5" Command="{Binding MenuCommand}" Foreground="White" Style="{StaticResource GlassButton.Blue}"/>
 
                     </StackPanel>
 
